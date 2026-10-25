@@ -1,0 +1,29 @@
+package com.github.alexmodguy.alexscaves.citadel.server.message;
+
+import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+
+public record SyncClientTickRateMessage(CompoundTag compound) implements CustomPacketPayload {
+    public static final Type<SyncClientTickRateMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("alexscaves", "citadel_tick_rate"));
+    public static final StreamCodec<FriendlyByteBuf, SyncClientTickRateMessage> CODEC = StreamCodec.ofMember(SyncClientTickRateMessage::write, SyncClientTickRateMessage::read);
+
+    public static void write(SyncClientTickRateMessage message, FriendlyByteBuf buf) {
+        PacketBufferUtils.writeTag(buf, message.compound);
+    }
+
+    public static SyncClientTickRateMessage read(FriendlyByteBuf buf) {
+        return new SyncClientTickRateMessage(PacketBufferUtils.readTag(buf));
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
+    public static void handle(SyncClientTickRateMessage message, ACPayloadContext context) {
+    }
+}

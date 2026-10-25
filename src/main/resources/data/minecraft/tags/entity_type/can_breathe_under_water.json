@@ -1,0 +1,18 @@
+{
+  "__comment": "All entities that can breathe underwater.",
+  "values": [
+    "alexscaves:deep_one",
+    "alexscaves:deep_one_knight",
+    "alexscaves:deep_one_mage",
+    "alexscaves:mine_guardian",
+    "alexscaves:tremorzilla",
+    "alexscaves:trilocaris",
+    "alexscaves:radgill",
+    "alexscaves:lanternfish",
+    "alexscaves:sweetish_fish",
+    "alexscaves:sea_pig",
+    "alexscaves:gossamer_worm",
+    "alexscaves:tripodfish",
+    "alexscaves:hullbreaker"
+  ]
+}

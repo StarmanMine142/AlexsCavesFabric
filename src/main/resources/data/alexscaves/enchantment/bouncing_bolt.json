@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.alexscaves.bouncing_bolt"
+  },
+  "exclusive_set": "#alexscaves:exclusive_sea_staff",
+  "supported_items": "#alexscaves:sea_staff_enchantable",
+  "weight": 2,
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 13
+  },
+  "max_cost": {
+    "base": 31,
+    "per_level_above_first": 13
+  },
+  "anvil_cost": 2,
+  "slots": ["mainhand"],
+  "effects": {}
+}

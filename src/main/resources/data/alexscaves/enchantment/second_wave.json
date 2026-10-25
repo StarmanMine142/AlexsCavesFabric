@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.alexscaves.second_wave"
+  },
+  "exclusive_set": "#alexscaves:exclusive_ortholance",
+  "supported_items": "#alexscaves:ortholance_enchantable",
+  "weight": 2,
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 12
+  },
+  "max_cost": {
+    "base": 31,
+    "per_level_above_first": 12
+  },
+  "anvil_cost": 2,
+  "slots": ["mainhand"],
+  "effects": {}
+}

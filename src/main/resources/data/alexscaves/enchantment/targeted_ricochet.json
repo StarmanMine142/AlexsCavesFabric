@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.alexscaves.targeted_ricochet"
+  },
+  "exclusive_set": "#alexscaves:exclusive_shot_gum",
+  "supported_items": "#alexscaves:shot_gum_enchantable",
+  "weight": 2,
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 16
+  },
+  "max_cost": {
+    "base": 31,
+    "per_level_above_first": 16
+  },
+  "anvil_cost": 2,
+  "slots": ["mainhand"],
+  "effects": {}
+}

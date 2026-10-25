@@ -1,0 +1,33 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+.vscode
+
+# local notes
+PLAN.md
+ALEXS_MOBS_PORTING_NOTES.md
+
+# Files from Forge MDK
+forge*changelog.txt
+
+# Backup files
+*.bak
