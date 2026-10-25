@@ -50,7 +50,7 @@ def prismModsDirPath = providers.gradleProperty('prismModsDir')
 
 java {
     withSourcesJar()
-    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
 loom {
@@ -109,7 +109,7 @@ tasks.processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-    options.release = 25
+    options.release = 21
 }
 
 idea {

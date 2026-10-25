@@ -361,7 +361,7 @@ public class CorrodentEntity extends Monster implements ICustomCollisions, IAnim
     }
 
     @Override
-    public boolean isMultipartEntity() {
+    public boolean acIsMultipartEntity() {
         return true;
     }
 

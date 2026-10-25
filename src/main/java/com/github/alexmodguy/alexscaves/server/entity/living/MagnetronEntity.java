@@ -171,7 +171,7 @@ public class MagnetronEntity extends Monster implements MultiPartEntity {
     }
 
     @Override
-    public boolean isMultipartEntity() {
+    public boolean acIsMultipartEntity() {
         return true;
     }
 

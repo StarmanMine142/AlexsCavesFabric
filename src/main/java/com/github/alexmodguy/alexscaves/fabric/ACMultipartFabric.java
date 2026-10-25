@@ -17,7 +17,7 @@ public final class ACMultipartFabric {
     }
 
     static void addParts(Level level, Entity entity) {
-        if (!(entity instanceof MultiPartEntity multipart) || !multipart.isMultipartEntity()) {
+        if (!(entity instanceof MultiPartEntity multipart) || !multipart.acIsMultipartEntity()) {
             return;
         }
         Entity[] parts = multipart.getParts();
@@ -33,7 +33,7 @@ public final class ACMultipartFabric {
     }
 
     static void removeParts(Level level, Entity entity) {
-        if (!(entity instanceof MultiPartEntity multipart) || !multipart.isMultipartEntity()) {
+        if (!(entity instanceof MultiPartEntity multipart) || !multipart.acIsMultipartEntity()) {
             return;
         }
         Entity[] parts = multipart.getParts();

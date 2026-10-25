@@ -393,7 +393,7 @@ public class QuarrySmasherEntity extends Entity implements MultiPartEntity {
     }
 
     @Override
-    public boolean isMultipartEntity() {
+    public boolean acIsMultipartEntity() {
         return true;
     }
 

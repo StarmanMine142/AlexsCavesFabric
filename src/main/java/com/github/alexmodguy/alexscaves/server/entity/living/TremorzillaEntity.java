@@ -1051,7 +1051,7 @@ public class TremorzillaEntity extends DinosaurEntity
     }
 
     @Override
-    public boolean isMultipartEntity() {
+    public boolean acIsMultipartEntity() {
         return true;
     }
 

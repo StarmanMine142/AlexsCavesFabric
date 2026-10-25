@@ -4,7 +4,7 @@ import net.minecraft.world.entity.Entity;
 
 public interface MultiPartEntity {
 
-    default boolean isMultipartEntity() {
+    default boolean acIsMultipartEntity() {
         return false;
     }
 

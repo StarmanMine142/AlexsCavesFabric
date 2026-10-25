@@ -379,7 +379,7 @@ public class HullbreakerEntity extends WaterAnimal implements IAnimatedEntity, K
     }
 
     @Override
-    public boolean isMultipartEntity() {
+    public boolean acIsMultipartEntity() {
         return true;
     }
 
