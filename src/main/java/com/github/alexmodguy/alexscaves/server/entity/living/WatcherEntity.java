@@ -277,8 +277,8 @@ public class WatcherEntity extends Monster implements IAnimatedEntity, Possesses
             }
             if (living instanceof Player player && isPossessionBreakable) {
                 player.setJumping(false);
-                Player clientSidePlayer = AlexsCaves.PROXY.getClientSidePlayer();
-                if (AlexsCaves.PROXY.isKeyDown(-1) && player == clientSidePlayer) {
+                Player clientSidePlayer = AlexsCaves.getClientSidePlayer();
+                if (AlexsCaves.isKeyDown(-1) && player == clientSidePlayer) {
                     AlexsCaves.sendMSGToServer(new PossessionKeyMessage(this.getId(), player.getId(), 0));
                 }
             }
@@ -319,16 +319,16 @@ public class WatcherEntity extends Monster implements IAnimatedEntity, Possesses
             if(possessedEntity == null && getPossessedEntityUUID() != null){
                 possessedEntity = level().getPlayerByUUID(getPossessedEntityUUID());
             }
-            if (possessedEntity instanceof Player player && player == AlexsCaves.PROXY.getClientSidePlayer()) {
+            if (possessedEntity instanceof Player player && player == AlexsCaves.getClientSidePlayer()) {
                 if (b == 77) {
                     if(AlexsCaves.COMMON_CONFIG.watcherPossession){
-                        AlexsCaves.PROXY.setRenderViewEntity(player, this);
+                        AlexsCaves.setRenderViewEntity(player, this);
                     }
                 } else {
                     level().addParticle(ACParticleRegistry.WATCHER_APPEARANCE, player.getX(), player.getEyeY(), player.getZ(), 0, 0, 0);
                     player.level().playSound(player, player.getX(), player.getY(), player.getZ(), ACSoundRegistry.WATCHER_SCARE, SoundSource.HOSTILE, 1.0F, 1.0F);
                     if(AlexsCaves.COMMON_CONFIG.watcherPossession) {
-                        AlexsCaves.PROXY.resetRenderViewEntity(player);
+                        AlexsCaves.resetRenderViewEntity(player);
                     }
                 }
             }

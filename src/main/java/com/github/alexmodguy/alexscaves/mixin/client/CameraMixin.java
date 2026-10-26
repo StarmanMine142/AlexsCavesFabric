@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.server.entity.util.MagnetUtil;
 import com.github.alexmodguy.alexscaves.server.entity.util.PossessesCamera;
 import com.github.alexmodguy.alexscaves.server.entity.util.ShakesScreen;
@@ -74,10 +74,10 @@ public abstract class CameraMixin {
         // In ComputeCameraAngles event, move() effects are overwritten by subsequent setPosition()
         Entity player = Minecraft.getInstance().getCameraEntity();
         if (player != null && AlexsCaves.CLIENT_CONFIG.screenShaking) {
-            float tremorAmount = ClientProxy.renderNukeShakeFor > 0 ? 1.5F : 0F;
+            float tremorAmount = AlexsCavesClient.renderNukeShakeFor > 0 ? 1.5F : 0F;
             if (player instanceof PossessesCamera watcherEntity) {
                 tremorAmount = watcherEntity.isPossessionBreakable()
-                        ? AlexsCaves.PROXY.getPossessionStrengthAmount(partialTicks)
+                        ? AlexsCaves.getPossessionStrengthAmount(partialTicks)
                         : 0F;
             }
             if (tremorAmount == 0) {
@@ -95,18 +95,18 @@ public abstract class CameraMixin {
                 }
             }
             if (tremorAmount > 0) {
-                if (ClientProxy.lastTremorTick != player.tickCount) {
+                if (AlexsCavesClient.lastTremorTick != player.tickCount) {
                     RandomSource rng = player.level().random;
-                    ClientProxy.randomTremorOffsets[0] = rng.nextFloat();
-                    ClientProxy.randomTremorOffsets[1] = rng.nextFloat();
-                    ClientProxy.randomTremorOffsets[2] = rng.nextFloat();
-                    ClientProxy.lastTremorTick = player.tickCount;
+                    AlexsCavesClient.randomTremorOffsets[0] = rng.nextFloat();
+                    AlexsCavesClient.randomTremorOffsets[1] = rng.nextFloat();
+                    AlexsCavesClient.randomTremorOffsets[2] = rng.nextFloat();
+                    AlexsCavesClient.lastTremorTick = player.tickCount;
                 }
                 float intensity = (float) (tremorAmount * Minecraft.getInstance().options.screenEffectScale().get());
                 this.move(
-                        ClientProxy.randomTremorOffsets[0] * 0.2F * intensity,
-                        ClientProxy.randomTremorOffsets[1] * 0.2F * intensity,
-                        ClientProxy.randomTremorOffsets[2] * 0.5F * intensity);
+                        AlexsCavesClient.randomTremorOffsets[0] * 0.2F * intensity,
+                        AlexsCavesClient.randomTremorOffsets[1] * 0.2F * intensity,
+                        AlexsCavesClient.randomTremorOffsets[2] * 0.5F * intensity);
             }
         }
     }

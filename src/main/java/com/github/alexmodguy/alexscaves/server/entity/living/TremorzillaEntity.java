@@ -288,7 +288,7 @@ public class TremorzillaEntity extends DinosaurEntity
             if (this.getAnimationTick() > 25F) {
                 this.yBodyRot = Mth.approachDegrees(this.yBodyRotO, lastYawBeforeWhip, 15);
             } else {
-                this.walkAnimation.setSpeed(1 + AlexsCaves.PROXY.getPartialTicks());
+                this.walkAnimation.setSpeed(1 + AlexsCaves.getPartialTicks());
                 this.yBodyRot = Mth.approachDegrees(this.yBodyRotO, lastYawBeforeWhip + negative * target, 70);
             }
         }
@@ -322,23 +322,23 @@ public class TremorzillaEntity extends DinosaurEntity
             } else {
                 this.reapplyPosition();
             }
-            Player player = AlexsCaves.PROXY.getClientSidePlayer();
+            Player player = AlexsCaves.getClientSidePlayer();
             if (player != null && player.isPassengerOfSameVehicle(this)) {
-                if (AlexsCaves.PROXY.isKeyDown(2) && getMeterAmount() >= 1.0F) {
+                if (AlexsCaves.isKeyDown(2) && getMeterAmount() >= 1.0F) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 2));
                 }
-                if (AlexsCaves.PROXY.isKeyDown(3) && (this.getAnimation() == NO_ANIMATION || this.getAnimation() == null)) {
+                if (AlexsCaves.isKeyDown(3) && (this.getAnimation() == NO_ANIMATION || this.getAnimation() == null)) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 3));
                 }
             }
             if (this.isFiring() && beamProgress > 0) {
                 if (!makingBeamSoundOnClient) {
-                    AlexsCaves.PROXY.playWorldSound((Object) this, (byte) 16);
+                    AlexsCaves.playWorldSound((Object) this, (byte) 16);
                     makingBeamSoundOnClient = true;
                 }
             }
             if (!isFiring() && makingBeamSoundOnClient) {
-                AlexsCaves.PROXY.clearSoundCacheFor(this);
+                AlexsCaves.clearSoundCacheFor(this);
                 makingBeamSoundOnClient = false;
             }
         } else {
@@ -656,7 +656,7 @@ public class TremorzillaEntity extends DinosaurEntity
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

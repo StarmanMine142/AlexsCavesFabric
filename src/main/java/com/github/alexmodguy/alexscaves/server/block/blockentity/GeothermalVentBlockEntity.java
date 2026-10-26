@@ -24,7 +24,7 @@ public class GeothermalVentBlockEntity extends BlockEntity {
     }
 
     public static void particleTick(Level level, BlockPos pos, BlockState state, GeothermalVentBlockEntity blockEntity) {
-        Player player = AlexsCaves.PROXY.getClientSidePlayer();
+        Player player = AlexsCaves.getClientSidePlayer();
         if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) > PARTICLE_DIST || level.random.nextBoolean()) {
             return;
         }

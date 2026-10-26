@@ -114,9 +114,9 @@ public class AtlatitanEntity extends SauropodBaseEntity implements KeybindUsingM
                 Vec3 particlePos = this.headPart.position().add((random.nextFloat() - 0.5F) * 2.0F * this.getScale(), random.nextFloat() * 2.0F * this.getScale(), (random.nextFloat() - 0.5F) * 2.0F * this.getScale()).add(this.getDeltaMovement());
                 this.level().addParticle(ACParticleRegistry.HAPPINESS, particlePos.x, particlePos.y, particlePos.z, ((double) this.random.nextFloat() - 0.5D) * 0.1D, ((double) this.random.nextFloat() - 0.5D) * 0.1D, ((double) this.random.nextFloat() - 0.5D) * 0.1D);
             }
-            Player player = AlexsCaves.PROXY.getClientSidePlayer();
+            Player player = AlexsCaves.getClientSidePlayer();
             if (player != null && player.isPassengerOfSameVehicle(this)) {
-                if (AlexsCaves.PROXY.isKeyDown(2) && getMeterAmount() >= 1.0F) {
+                if (AlexsCaves.isKeyDown(2) && getMeterAmount() >= 1.0F) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 2));
                 }
             }

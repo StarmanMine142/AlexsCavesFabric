@@ -32,7 +32,7 @@ public class CaveBookItem extends Item {
         }
         playerIn.swing(handIn);
         if (worldIn.isClientSide) {
-            AlexsCaves.PROXY.openBookGUI(itemStackIn);
+            AlexsCaves.openBookGUI(itemStackIn);
         }
         return new InteractionResultHolder<>(InteractionResult.sidedSuccess(worldIn.isClientSide), itemStackIn);
     }

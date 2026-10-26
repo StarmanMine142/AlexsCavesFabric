@@ -3,7 +3,7 @@ package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.citadel.client.shader.PostEffectRegistry;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.render.entity.SubmarineRenderer;
 import com.github.alexmodguy.alexscaves.client.render.entity.layer.ACPotionEffectLayer;
 import com.github.alexmodguy.alexscaves.server.entity.item.SubmarineEntity;
@@ -46,7 +46,7 @@ public abstract class GameRendererMixin {
             at = @At(value = "TAIL")
     )
     public void ac_tick(CallbackInfo ci) {
-        if (((ClientProxy) AlexsCaves.PROXY).renderNukeSkyDarkFor > 0 && darkenWorldAmount < 1.0F) {
+        if (AlexsCavesClient.renderNukeSkyDarkFor > 0 && darkenWorldAmount < 1.0F) {
             darkenWorldAmount = Math.min(darkenWorldAmount + 0.3F, 1.0F);
         }
     }
@@ -67,12 +67,12 @@ public abstract class GameRendererMixin {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.player != null && AlexsCaves.CLIENT_CONFIG.sugarRushSaturationEffect
                     && minecraft.player.hasEffect(ACEffectRegistry.SUGAR_RUSH)) {
-                PostEffectRegistry.renderEffectForNextTick(ClientProxy.SUGAR_RUSH_SHADER);
+                PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.SUGAR_RUSH_SHADER);
             }
             PostEffectRegistry.processEffects(minecraft.getMainRenderTarget());
             PostEffectRegistry.blitEffects();
         }
-        ((ClientProxy) AlexsCaves.PROXY).preScreenRender(partialTick);
+        AlexsCavesClient.preScreenRender(partialTick);
     }
 
     @Inject(

@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -51,7 +51,7 @@ public class WorldEventMessage implements CustomPacketPayload {
             Player playerSided = context.player();
             if (playerSided != null && playerSided.level() != null) {
                 BlockPos blockPos = new BlockPos(message.blockX, message.blockY, message.blockZ);
-                AlexsCaves.PROXY.playWorldEvent(message.messageId, playerSided.level(), blockPos);
+                AlexsCaves.playWorldEvent(message.messageId, playerSided.level(), blockPos);
             }
         });
     }

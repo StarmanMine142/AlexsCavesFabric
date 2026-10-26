@@ -100,7 +100,7 @@ public class DarknessArmorItem extends ArmorItem implements CustomArmorPostRende
                     if (modified) {
                         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
                     }
-                } else if (AlexsCaves.PROXY.getClientSidePlayer() == entity && getMeterProgress(stack) >= 1.0F && AlexsCaves.PROXY.isKeyDown(2)) {
+                } else if (AlexsCaves.getClientSidePlayer() == entity && getMeterProgress(stack) >= 1.0F && AlexsCaves.isKeyDown(2)) {
                     AlexsCaves.sendMSGToServer(new ArmorKeyMessage(EquipmentSlot.CHEST.ordinal(), living.getId(), 2));
                     onKeyPacket(living, stack, 2);
                 }

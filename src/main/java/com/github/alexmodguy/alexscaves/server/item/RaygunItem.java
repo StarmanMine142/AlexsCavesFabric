@@ -164,7 +164,7 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
         }
         if (level.isClientSide) {
             setRayPosition(stack, vec3.x, vec3.y, vec3.z);
-            AlexsCaves.PROXY.playWorldSound(living, (byte) 8);
+            AlexsCaves.playWorldSound(living, (byte) 8);
             int efficency = ACEnchantmentHelper.getEnchantmentLevel(level, ACEnchantmentRegistry.ENERGY_EFFICIENCY, stack);
             int divis = 2 + (int) Math.floor(efficency * 1.5F);
             if (time >= 1F && i % divis == 0 && (!(living instanceof Player) || !((Player) living).isCreative())) {
@@ -311,7 +311,7 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
         if (level.isClientSide) {
             AlexsCaves.sendMSGToServer(new UpdateItemTagMessage(player.getId(), stack));
         }
-        AlexsCaves.PROXY.clearSoundCacheFor(player);
+        AlexsCaves.clearSoundCacheFor(player);
     }
 
     public boolean isBarVisible(ItemStack stack) {
@@ -324,7 +324,7 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
 
     public int getBarColor(ItemStack stack) {
         float pulseRate = (float) getCharge(stack) / (float) MAX_CHARGE * 2.0F;
-        float f = AlexsCaves.PROXY.getPlayerTime() + AlexsCaves.PROXY.getPartialTicks();
+        float f = AlexsCaves.getPlayerTime() + AlexsCaves.getPartialTicks();
         float f1 = 0.5F * (float) (1.0F + Math.sin(f * pulseRate));
         return Mth.hsvToRgb(0.3F, f1 * 0.6F + 0.2F, 1.0F);
     }
@@ -332,7 +332,7 @@ public class RaygunItem extends Item implements UpdatesStackTags, AlwaysCombinab
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         if (getCharge(stack) != 0) {
-            String chargeLeft = "" + (int) (MAX_CHARGE - getCharge(stack));
+            String chargeLeft = "" + (MAX_CHARGE - getCharge(stack));
             tooltip.add(Component.translatable("item.alexscaves.raygun.charge", chargeLeft, MAX_CHARGE).withStyle(ChatFormatting.GREEN));
         }
     }

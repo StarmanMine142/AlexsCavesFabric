@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -70,7 +70,7 @@ public class BeholderSyncMessage implements CustomPacketPayload {
     public static void handle(BeholderSyncMessage message, ACPayloadContext context) {
         if (context.flow().isClientbound()) {
             context.enqueueWork(() -> {
-                AlexsCaves.PROXY.handleBeholderSync(
+                AlexsCaves.handleBeholderSync(
                         message.beholderId, message.active,
                         message.x, message.y, message.z,
                         message.yRot, message.xRot, message.usingPlayerUUID

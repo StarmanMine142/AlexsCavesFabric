@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -43,7 +43,7 @@ public class UpdateBossEruptionStatus implements CustomPacketPayload {
         context.enqueueWork(() -> {
             Player playerSided = context.player();
             if (playerSided != null) {
-                AlexsCaves.PROXY.setPrimordialBossActive(playerSided.level(), message.entityId, message.erupting);
+                AlexsCaves.setPrimordialBossActive(playerSided.level(), message.entityId, message.erupting);
             }
         });
     }

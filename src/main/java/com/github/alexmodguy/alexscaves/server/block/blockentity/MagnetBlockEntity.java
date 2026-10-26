@@ -53,7 +53,7 @@ public class MagnetBlockEntity extends BlockEntity {
         entity.prevRangeVisuality = entity.rangeVisuality;
         entity.age++;
         if (level.isClientSide) {
-            if (entity.showRangeBox(AlexsCaves.PROXY.getClientSidePlayer())) {
+            if (entity.showRangeBox(AlexsCaves.getClientSidePlayer())) {
                 if (entity.rangeVisuality < 1.0F) {
                     entity.rangeVisuality += 0.2F;
                 }
@@ -63,11 +63,11 @@ public class MagnetBlockEntity extends BlockEntity {
                 }
             }
             entity.locallyActive = false;
-            if(state.getValue(MagnetBlock.POWERED)){
+            if (state.getValue(MagnetBlock.POWERED)) {
                 entity.locallyActive = true;
             }
             if(entity.locallyActive && !entity.isRemoved()){
-                AlexsCaves.PROXY.playWorldSound(entity, (byte)4);
+                AlexsCaves.playWorldSound(entity, (byte)4);
             }
         } else {
             Direction direction = entity.getDirection();
@@ -191,7 +191,7 @@ public class MagnetBlockEntity extends BlockEntity {
     }
 
     public void setRemoved() {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.setRemoved();
     }
 

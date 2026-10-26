@@ -307,7 +307,7 @@ public class SpelunkeryTableScreen extends AbstractContainerScreen<SpelunkeryTab
     }
 
     public boolean isFirstTimeUsing() {
-        return !AlexsCaves.PROXY.isSpelunkeryTutorialComplete();
+        return !AlexsCaves.isSpelunkeryTutorialComplete();
     }
 
     protected void containerTick() {

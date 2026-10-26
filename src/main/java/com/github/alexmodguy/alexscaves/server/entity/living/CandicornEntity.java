@@ -389,26 +389,26 @@ public class CandicornEntity extends TamableAnimal implements KeybindUsingMount,
                 hasRunningAttributes = false;
                 this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.25D);
             }
-        }else{
-            Player player = AlexsCaves.PROXY.getClientSidePlayer();
+        } else {
+            Player player = AlexsCaves.getClientSidePlayer();
             if (player != null && player.isPassengerOfSameVehicle(this)) {
-                if (AlexsCaves.PROXY.isKeyDown(2) && getMeterAmount() >= 1.0F && this.isRunning()) {
+                if (AlexsCaves.isKeyDown(2) && getMeterAmount() >= 1.0F && this.isRunning()) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 2));
                 }
             }
             spawnPossessedParticles(getRandomX(0.5D), getRandomY(), getRandomZ(0.5D), this.level());
         }
         Entity controllingPassenger = this.getControllingPassenger();
-        if(controllingPassenger != null){
+        if (controllingPassenger != null) {
             float f = Mth.degreesDifference(controllingPassenger.getYHeadRot(), this.yBodyRot);
-            if(Math.abs(f) > 2){
-                if(f < 0){
+            if (Math.abs(f) > 2) {
+                if (f < 0) {
                     maneAngle = Mth.approach(maneAngle, -1F, 0.3F);
-                }else{
+                }else {
                     maneAngle = Mth.approach(maneAngle, 1F, 0.3F);
                 }
             }
-            if(!level().isClientSide) {
+            if (!level().isClientSide) {
                 if(this.touchingWall()){
                     this.setRunning(false);
                     this.setCharging(false);
@@ -434,19 +434,19 @@ public class CandicornEntity extends TamableAnimal implements KeybindUsingMount,
                     this.setMeterAmount(Math.min(this.getMeterAmount() + 0.005F, 1.0F));
                 }
             }
-        }else{
-            if(controllerForwardsTicks > 0){
+        } else {
+            if (controllerForwardsTicks > 0) {
                 controllerForwardsTicks = 0;
                 this.setRunning(false);
             }
-            if(playerDrivenChargeTicks > 0){
+            if (playerDrivenChargeTicks > 0){
                 playerDrivenChargeTicks = 0;
                 this.setCharging(false);
             }
             this.setMeterAmount(0.0F);
         }
-        if(this.isCharging() && isAlive()){
-            AlexsCaves.PROXY.playWorldSound(this, (byte) 19);
+        if (this.isCharging() && isAlive()) {
+            AlexsCaves.playWorldSound(this, (byte) 19);
         }
         tailYaw = Mth.approachDegrees(this.tailYaw, yBodyRot, 10);
 
@@ -454,7 +454,7 @@ public class CandicornEntity extends TamableAnimal implements KeybindUsingMount,
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

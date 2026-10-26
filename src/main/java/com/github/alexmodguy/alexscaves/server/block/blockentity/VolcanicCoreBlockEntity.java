@@ -27,7 +27,6 @@ import java.util.function.Predicate;
 
 public class VolcanicCoreBlockEntity extends BlockEntity {
 
-    private int battleTime = 0;
     private int bossSpawnCooldown = 0;
     private int tephraSpawnCooldown = 0;
 
@@ -61,13 +60,11 @@ public class VolcanicCoreBlockEntity extends BlockEntity {
                 }
             }
         }
-        if (AlexsCaves.PROXY.isPrimordialBossActive(level)) {
+        if (AlexsCaves.isPrimordialBossActive(level)) {
             if (entity.tephraSpawnCooldown-- <= 0) {
                 entity.spawnTephra(true);
                 entity.tephraSpawnCooldown = 120 + level.random.nextInt(120);
             }
-        } else {
-            entity.battleTime = 0;
         }
     }
 

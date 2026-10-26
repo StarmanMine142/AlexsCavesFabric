@@ -74,6 +74,5 @@
     "client.SoundEngineMixin",
     "client.UnderwaterAmbientSoundHandlerMixin",
     "client.UnderwaterAmbientSoundInstancesMixin"
-  ],
-  "minVersion": "0.8"
+  ]
 }

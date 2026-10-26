@@ -221,7 +221,6 @@ public class SodaBottleRocketEntity extends FireworkRocketEntity {
                 this.attachedToEntity.hurt(this.damageSources().fireworks(this, this.getOwner()), 5.0F + (float)(list.size() * 2));
             }
 
-            double d0 = 5.0;
             Vec3 vec3 = this.position();
 
             for (LivingEntity livingentity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(5.0))) {
@@ -255,11 +254,10 @@ public class SodaBottleRocketEntity extends FireworkRocketEntity {
             for(int i = 0; i < this.random.nextInt(15) + 15; ++i) {
                 this.level().addParticle(ACParticleRegistry.PURPLE_SODA_BUBBLE, this.getX() + this.random.nextGaussian() * 0.95D, this.getY() + this.random.nextGaussian() * 0.95D, this.getZ() + this.random.nextGaussian() * 0.95D, this.random.nextGaussian() * 0.15D, this.random.nextGaussian() * 0.15D, this.random.nextGaussian() * 0.15D);
             }
-            SoundEvent soundEvent = AlexsCaves.PROXY.isFarFromCamera(this.getX(), this.getY(), this.getZ()) ? SoundEvents.FIREWORK_ROCKET_BLAST : SoundEvents.FIREWORK_ROCKET_BLAST_FAR;
+            SoundEvent soundEvent = AlexsCaves.isFarFromCamera(this.getX(), this.getY(), this.getZ()) ? SoundEvents.FIREWORK_ROCKET_BLAST : SoundEvents.FIREWORK_ROCKET_BLAST_FAR;
             this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), soundEvent, SoundSource.AMBIENT, 20.0F, 0.95F + this.random.nextFloat() * 0.1F, true);
 
-
-        }else{
+        } else {
             super.handleEntityEvent(id);
         }
     }
@@ -267,5 +265,4 @@ public class SodaBottleRocketEntity extends FireworkRocketEntity {
     public ItemStack getItem() {
         return new ItemStack(ACItemRegistry.PURPLE_SODA_BOTTLE_ROCKET);
     }
-
 }

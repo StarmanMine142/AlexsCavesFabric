@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -43,9 +43,9 @@ public class UpdateBossBarMessage implements CustomPacketPayload {
         }
         context.enqueueWork(() -> {
             if (message.renderType == -1) {
-                AlexsCaves.PROXY.removeBossBarRender(message.bossBar);
+                AlexsCaves.removeBossBarRender(message.bossBar);
             } else {
-                AlexsCaves.PROXY.setBossBarRender(message.bossBar, message.renderType);
+                AlexsCaves.setBossBarRender(message.bossBar, message.renderType);
             }
         });
     }

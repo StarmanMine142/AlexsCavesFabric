@@ -145,7 +145,7 @@ public class FerrouslimeEntity extends Monster {
                 double particleZ = this.getZ() + (random.nextDouble() - 0.5F) * (slimeSize + 1.5F);
                 level().addParticle(ACParticleRegistry.FERROUSLIME, particleX, particleY, particleZ, this.getId(), 0, 0);
             }
-            AlexsCaves.PROXY.playWorldSound(this, (byte) 13);
+            AlexsCaves.playWorldSound(this, (byte) 13);
         } else {
             LivingEntity living = this.getTarget();
             if (living != null && living.isAlive()) {
@@ -165,7 +165,7 @@ public class FerrouslimeEntity extends Monster {
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         if (this.getHeadCount() >= 2 && this.isDeadOrDying()) {
             int ours = this.getHeadCount() / 2;
             int theirs = this.getHeadCount() - ours;

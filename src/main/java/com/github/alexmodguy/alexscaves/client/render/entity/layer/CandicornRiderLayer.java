@@ -34,9 +34,9 @@ public class CandicornRiderLayer extends RenderLayer<CandicornEntity, CandicornM
                 poseStack.translate(0, 0.55F, 0.1F);
                 poseStack.mulPose(Axis.XN.rotationDegrees(180F));
                 poseStack.mulPose(Axis.YN.rotationDegrees(360 - bodyYaw));
-                AlexsCaves.PROXY.releaseRenderingEntity(passenger.getUUID());
+                AlexsCaves.releaseRenderingEntity(passenger.getUUID());
                 renderPassenger(passenger, 0, 0, 0, 0, partialTicks, poseStack, bufferIn, packedLightIn);
-                AlexsCaves.PROXY.blockRenderingEntity(passenger.getUUID());
+                AlexsCaves.blockRenderingEntity(passenger.getUUID());
                 poseStack.popPose();
             }
 

@@ -187,7 +187,7 @@ public class NucleeperEntity extends Monster implements ActivatesSirens, Powerab
             }
         }
         if (this.isTriggered() && this.isAlive()) {
-            AlexsCaves.PROXY.playWorldSound(this, (byte) 1);
+            AlexsCaves.playWorldSound(this, (byte) 1);
         }
         sirenAngle += (10F + 30F * closeProgress) % 360F;
         closeProgress = (float) time / AlexsCaves.COMMON_CONFIG.nucleeperFuseTime;
@@ -207,7 +207,7 @@ public class NucleeperEntity extends Monster implements ActivatesSirens, Powerab
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

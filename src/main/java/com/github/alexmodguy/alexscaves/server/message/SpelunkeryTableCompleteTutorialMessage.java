@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -42,7 +42,7 @@ public class SpelunkeryTableCompleteTutorialMessage implements CustomPacketPaylo
             context.enqueueWork(() -> {
                 Player player = context.player();
                 if (player != null) {
-                    AlexsCaves.PROXY.setSpelunkeryTutorialComplete(message.completedTutorial);
+                    AlexsCaves.setSpelunkeryTutorialComplete(message.completedTutorial);
                 }
             });
         }

@@ -155,8 +155,8 @@ public class BoundroidEntity extends Monster {
                     }
                 }
             }
-        }else if(isAlive()){
-            AlexsCaves.PROXY.playWorldSound(this, (byte) 12);
+        } else if (isAlive()){
+            AlexsCaves.playWorldSound(this, (byte) 12);
         }
         if (stopSlammingFor > 0) {
             stopSlammingFor--;
@@ -175,7 +175,7 @@ public class BoundroidEntity extends Monster {
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

@@ -26,19 +26,18 @@ public class GummyBearHeldMobLayer extends RenderLayer<GummyBearEntity, GummyBea
     public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, GummyBearEntity bear, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         Entity heldMob = bear.getHeldMob();
         if (heldMob != null) {
-            float bodyYaw = heldMob.yRotO + (heldMob.getYRot() - heldMob.yRotO) * partialTicks;
-            AlexsCaves.PROXY.releaseRenderingEntity(heldMob.getUUID());
+            AlexsCaves.releaseRenderingEntity(heldMob.getUUID());
             matrixStackIn.pushPose();
             getParentModel().translateToHand(HumanoidArm.RIGHT, matrixStackIn);
             matrixStackIn.translate(0.1F * bear.getScale(), 0.7F * bear.getScale(), -0.3F * bear.getScale());
             matrixStackIn.mulPose(Axis.XN.rotationDegrees(180F));
             matrixStackIn.mulPose(Axis.YN.rotationDegrees(-90F));
             matrixStackIn.mulPose(Axis.XN.rotationDegrees(-10F));
-            if (!AlexsCaves.PROXY.isFirstPersonPlayer(heldMob)) {
+            if (!AlexsCaves.isFirstPersonPlayer(heldMob)) {
                 renderEntity(heldMob, 0, 0, 0, 0, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
             matrixStackIn.popPose();
-            AlexsCaves.PROXY.blockRenderingEntity(heldMob.getUUID());
+            AlexsCaves.blockRenderingEntity(heldMob.getUUID());
         }
     }
 

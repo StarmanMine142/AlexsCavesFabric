@@ -104,7 +104,7 @@ public class CommonEvents {
 
     public void livingDie(LivingEntity entity, DamageSource source) {
         if (entity.getType() == EntityType.MAGMA_CUBE && source != null && source.getEntity() instanceof Frog frog) {
-            if (frog.getVariant().is(ACFrogRegistry.PRIMORDIAL)) {
+            if (frog.getVariant().is(ACFrogRegistry.PRIMORDIAL_KEY)) {
                 entity.spawnAtLocation(new ItemStack(ACBlockRegistry.CARMINE_FROGLIGHT));
             }
         }

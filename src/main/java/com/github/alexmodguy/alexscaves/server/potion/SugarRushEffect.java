@@ -30,7 +30,7 @@ public class SugarRushEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         if(entity.level().isClientSide){
-            AlexsCaves.PROXY.playWorldSound(entity, (byte)18);
+            AlexsCaves.playWorldSound(entity, (byte)18);
         }
         return true;
     }

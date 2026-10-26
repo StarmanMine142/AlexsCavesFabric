@@ -75,9 +75,9 @@ public class BeholderEyeEntity extends Entity implements PossessesCamera {
                 living.xxa = 0;
             }
             if (level().isClientSide) {
-                Player clientSidePlayer = AlexsCaves.PROXY.getClientSidePlayer();
+                Player clientSidePlayer = AlexsCaves.getClientSidePlayer();
                 if (usingPlayer == clientSidePlayer) {
-                    if (AlexsCaves.PROXY.isKeyDown(4)) {
+                    if (AlexsCaves.isKeyDown(4)) {
                         AlexsCaves.sendMSGToServer(new PossessionKeyMessage(this.getId(), usingPlayer.getId(), 0));
                     }
                 }
@@ -147,10 +147,10 @@ public class BeholderEyeEntity extends Entity implements PossessesCamera {
             if (usingPlayer instanceof Player player) {
                 if (b == 77) {
                     player.playSound(ACSoundRegistry.BEHOLDER_ENTER);
-                    AlexsCaves.PROXY.setRenderViewEntity(player, this);
+                    AlexsCaves.setRenderViewEntity(player, this);
                 } else {
                     player.playSound(ACSoundRegistry.BEHOLDER_EXIT);
-                    AlexsCaves.PROXY.resetRenderViewEntity(player);
+                    AlexsCaves.resetRenderViewEntity(player);
                 }
             }
         } else {

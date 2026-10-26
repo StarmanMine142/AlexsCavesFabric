@@ -1,4 +1,4 @@
-package com.github.alexmodguy.alexscaves.fabric;
+package com.github.alexmodguy.alexscaves.server.level;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;

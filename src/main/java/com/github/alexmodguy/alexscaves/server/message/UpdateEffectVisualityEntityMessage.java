@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.fabric.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import com.github.alexmodguy.alexscaves.server.misc.ACSoundRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.IrradiatedEffect;
@@ -80,11 +80,11 @@ public class UpdateEffectVisualityEntityMessage implements CustomPacketPayload {
                             mobEffect = ACEffectRegistry.IRRADIATED;
                             break;
                         case 1:
-                            boolean isNewEffect = !AlexsCaves.PROXY.hasBubbledEffectVisual(message.entityID);
+                            boolean isNewEffect = !AlexsCaves.hasBubbledEffectVisual(message.entityID);
                             if (message.remove) {
-                                AlexsCaves.PROXY.setBubbledEffectTicks(message.entityID, 0);
+                                AlexsCaves.setBubbledEffectTicks(message.entityID, 0);
                             } else {
-                                AlexsCaves.PROXY.setBubbledEffectTicks(message.entityID, message.duration);
+                                AlexsCaves.setBubbledEffectTicks(message.entityID, message.duration);
                                 if (isNewEffect) {
                                     entity.playSound(ACSoundRegistry.SEA_STAFF_BUBBLE);
                                 }

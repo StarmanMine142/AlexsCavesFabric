@@ -37,14 +37,14 @@ public class AtlatitanRiderLayer extends RenderLayer<AtlatitanEntity, AtlatitanM
                 if (passenger == Minecraft.getInstance().player && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
                     continue;
                 }
-                AlexsCaves.PROXY.releaseRenderingEntity(passenger.getUUID());
+                AlexsCaves.releaseRenderingEntity(passenger.getUUID());
                 poseStack.pushPose();
                 poseStack.translate(ridePos.x, ridePos.y - 1.65F + passenger.getBbHeight(), ridePos.z);
                 poseStack.mulPose(Axis.XN.rotationDegrees(180F));
                 poseStack.mulPose(Axis.YN.rotationDegrees(360 - bodyYaw));
                 renderPassenger(passenger, 0, 0, 0, 0, partialTicks, poseStack, bufferIn, packedLightIn);
                 poseStack.popPose();
-                AlexsCaves.PROXY.blockRenderingEntity(passenger.getUUID());
+                AlexsCaves.blockRenderingEntity(passenger.getUUID());
             }
 
         }

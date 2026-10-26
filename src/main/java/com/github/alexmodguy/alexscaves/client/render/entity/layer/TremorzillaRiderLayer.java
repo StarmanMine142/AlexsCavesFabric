@@ -36,12 +36,11 @@ public class TremorzillaRiderLayer extends RenderLayer<TremorzillaEntity, Tremor
                 poseStack.translate(0, 0.5F - burnProgress * 0.5F - swimProgress * 0.5F, 0.35F - burnProgress * 0.5F - swimProgress * 0.5F);
                 poseStack.mulPose(Axis.XN.rotationDegrees(190F - burnProgress * 40));
                 poseStack.mulPose(Axis.YN.rotationDegrees(360 - bodyYaw));
-                AlexsCaves.PROXY.releaseRenderingEntity(passenger.getUUID());
+                AlexsCaves.releaseRenderingEntity(passenger.getUUID());
                 renderPassenger(passenger, 0, 0, 0, 0, partialTicks, poseStack, bufferIn, packedLightIn);
-                AlexsCaves.PROXY.blockRenderingEntity(passenger.getUUID());
+                AlexsCaves.blockRenderingEntity(passenger.getUUID());
                 poseStack.popPose();
             }
-
         }
     }
 

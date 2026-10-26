@@ -148,23 +148,23 @@ public class SubmarineEntity extends Entity implements KeybindUsingMount {
         this.tickLerp();
 
         if (this.level().isClientSide) {
-            Player player = AlexsCaves.PROXY.getClientSidePlayer();
+            Player player = AlexsCaves.getClientSidePlayer();
             if (player != null && player.isPassengerOfSameVehicle(this)) {
-                if (AlexsCaves.PROXY.isKeyDown(0) && controlUpTicks < 2) {
+                if (AlexsCaves.isKeyDown(0) && controlUpTicks < 2) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 0));
                     controlUpTicks = 10;
                 }
-                if (AlexsCaves.PROXY.isKeyDown(1) && controlDownTicks < 2) {
+                if (AlexsCaves.isKeyDown(1) && controlDownTicks < 2) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 1));
                     controlDownTicks = 10;
                 }
-                if (AlexsCaves.PROXY.isKeyDown(2) && floodlightToggleCooldown <= 0) {
+                if (AlexsCaves.isKeyDown(2) && floodlightToggleCooldown <= 0) {
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), player.getId(), 2));
                     floodlightToggleCooldown = 5;
                 }
             }
             if (this.isVehicle() && this.isInWaterOrBubble() && this.isAlive()) {
-                AlexsCaves.PROXY.playWorldSound(this, (byte) 15);
+                AlexsCaves.playWorldSound(this, (byte) 15);
             }
         }
 
@@ -254,7 +254,7 @@ public class SubmarineEntity extends Entity implements KeybindUsingMount {
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

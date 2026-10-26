@@ -180,8 +180,8 @@ public class CorrodentEntity extends Monster implements ICustomCollisions, IAnim
                 }
                 this.setNoGravity(false);
             }
-        }else if(this.isDigging() && isAlive()){
-            AlexsCaves.PROXY.playWorldSound(this, (byte) 6);
+        } else if (this.isDigging() && isAlive()){
+            AlexsCaves.playWorldSound(this, (byte) 6);
         }
         prevSurfacePosition = surfacePosition;
         if (isMoving() || surfacePosition == null) {
@@ -331,7 +331,7 @@ public class CorrodentEntity extends Monster implements ICustomCollisions, IAnim
     // When not digging: uses vanilla collision logic
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
         if (allParts != null) {
             for (Entity part : allParts) {

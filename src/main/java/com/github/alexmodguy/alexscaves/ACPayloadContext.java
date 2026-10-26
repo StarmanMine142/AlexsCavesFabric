@@ -1,4 +1,4 @@
-package com.github.alexmodguy.alexscaves.fabric;
+package com.github.alexmodguy.alexscaves;
 
 import net.minecraft.world.entity.player.Player;
 

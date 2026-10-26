@@ -1,7 +1,8 @@
-package com.github.alexmodguy.alexscaves.fabric;
+package com.github.alexmodguy.alexscaves.server.network;
 
 import com.github.alexmodguy.alexscaves.citadel.server.message.AnimationMessage;
 import com.github.alexmodguy.alexscaves.citadel.server.message.PropertiesMessage;
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import com.github.alexmodguy.alexscaves.server.message.*;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -69,7 +70,7 @@ public final class ACNetworkingFabric {
     }
 
     @FunctionalInterface
-    interface PayloadHandler<T extends CustomPacketPayload> {
+    public interface PayloadHandler<T extends CustomPacketPayload> {
         void handle(T payload, ACPayloadContext context);
     }
 }

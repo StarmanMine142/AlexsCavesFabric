@@ -12,10 +12,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.alexmodguy.alexscaves.fabric.AlexsCavesFabric"
+      "com.github.alexmodguy.alexscaves.AlexsCaves"
     ],
     "client": [
-      "com.github.alexmodguy.alexscaves.fabric.AlexsCavesFabricClient"
+      "com.github.alexmodguy.alexscaves.client.AlexsCavesClient"
     ],
     "jei_mod_plugin": [
       "com.github.alexmodguy.alexscaves.compat.jei.AlexsCavesPlugin"

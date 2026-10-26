@@ -1,6 +1,6 @@
 package com.github.alexmodguy.alexscaves.server.level.storage;
 
-import com.github.alexmodguy.alexscaves.fabric.ACWorldWorkerManager;
+import com.github.alexmodguy.alexscaves.server.level.ACWorldWorkerManager;
 import com.github.alexmodguy.alexscaves.server.entity.living.LuxtructosaurusEntity;
 import com.github.alexmodguy.alexscaves.server.level.map.CaveBiomeMapWorldWorker;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;

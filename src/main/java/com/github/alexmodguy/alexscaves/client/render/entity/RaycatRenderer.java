@@ -2,7 +2,7 @@ package com.github.alexmodguy.alexscaves.client.render.entity;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.citadel.client.shader.PostEffectRegistry;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.model.RaycatModel;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
 import com.github.alexmodguy.alexscaves.server.entity.living.RaycatEntity;
@@ -62,7 +62,7 @@ public class RaycatRenderer extends MobRenderer<RaycatEntity, RaycatModel> imple
 
     public void render(RaycatEntity entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn) {
         if(!sepia && AlexsCaves.CLIENT_CONFIG.radiationGlowEffect){
-            PostEffectRegistry.renderEffectForNextTick(ClientProxy.IRRADIATED_SHADER);
+            PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.IRRADIATED_SHADER);
         }
         float absorbAmount = entityIn.getAbsorbAmount(partialTicks);
         Entity absorbTarget = entityIn.getAbsorbTarget();

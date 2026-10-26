@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.client.particle;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.model.MushroomCloudModel;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
 import com.github.alexmodguy.alexscaves.client.render.ColorUtil;
@@ -57,11 +57,10 @@ public class MushroomCloudParticle extends Particle {
     }
 
     public void tick() {
-        ClientProxy clientProxy = (ClientProxy) AlexsCaves.PROXY;
-        clientProxy.renderNukeSkyDarkFor = Math.max(clientProxy.renderNukeSkyDarkFor, 70);
-        clientProxy.muteNonNukeSoundsFor = Math.max(clientProxy.muteNonNukeSoundsFor, 50);
+        AlexsCavesClient.renderNukeSkyDarkFor = Math.max(AlexsCavesClient.renderNukeSkyDarkFor, 70);
+        AlexsCavesClient.muteNonNukeSoundsFor = Math.max(AlexsCavesClient.muteNonNukeSoundsFor, 50);
         if (age < BALL_FOR + 10) {
-            clientProxy.renderNukeShakeFor = Math.max(clientProxy.renderNukeShakeFor, 40);
+            AlexsCavesClient.renderNukeShakeFor = Math.max(AlexsCavesClient.renderNukeShakeFor, 40);
         }
         boolean large = this.scale > 2.0F;
         if(age > BALL_FOR / 2 + 5){
@@ -75,7 +74,7 @@ public class MushroomCloudParticle extends Particle {
                 playedRinging = true;
                 playSound(ACSoundRegistry.NUCLEAR_EXPLOSION_RINGING, 100, 50, 0.05F, true);
             }
-            clientProxy.renderNukeFlashFor = Math.max(clientProxy.renderNukeFlashFor, 16);
+            AlexsCavesClient.renderNukeFlashFor = Math.max(AlexsCavesClient.renderNukeFlashFor, 16);
         } else if (age < lifetime - FADE_SPEED) {
             float life = (float) (Math.log(1 + (age - BALL_FOR) / (float) (lifetime - BALL_FOR))) * 2F;
             float explosionSpread = (12 * life + 4F) * scale;

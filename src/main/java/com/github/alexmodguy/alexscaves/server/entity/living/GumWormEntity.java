@@ -239,7 +239,7 @@ public class GumWormEntity extends Monster implements ICustomCollisions, KaijuMo
                 this.reapplyPosition();
             }
             if(this.isDigging() && isAlive()){
-                AlexsCaves.PROXY.playWorldSound(this, (byte) 17);
+                AlexsCaves.playWorldSound(this, (byte) 17);
             }
             spawnDustParticles(false);
         }else{
@@ -553,7 +553,7 @@ public class GumWormEntity extends Monster implements ICustomCollisions, KaijuMo
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

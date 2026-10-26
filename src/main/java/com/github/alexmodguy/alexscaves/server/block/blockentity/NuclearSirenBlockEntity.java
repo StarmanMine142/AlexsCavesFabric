@@ -100,7 +100,7 @@ public class NuclearSirenBlockEntity extends BlockEntity {
             }
         }else{
             if (powered) {
-                AlexsCaves.PROXY.playWorldSound(entity, (byte) 0);
+                AlexsCaves.playWorldSound(entity, (byte) 0);
             }
         }
     }
@@ -189,7 +189,7 @@ public class NuclearSirenBlockEntity extends BlockEntity {
     }
 
     public void setRemoved() {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.setRemoved();
     }
 

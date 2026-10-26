@@ -5,6 +5,7 @@ import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
 import com.github.alexmodguy.alexscaves.server.misc.ACTagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -53,8 +54,10 @@ public abstract class FrogMixin extends Animal {
     private void ac_finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @javax.annotation.Nullable SpawnGroupData spawnDataIn, CallbackInfoReturnable<SpawnGroupData> cir) {
         Holder<Biome> holder = level.getBiome(this.blockPosition());
         if (holder.is(ACBiomeRegistry.PRIMORDIAL_CAVES)) {
-            // In 1.21, setVariant takes Holder<FrogVariant> - DeferredHolder already implements Holder
-            setVariant(ACFrogRegistry.PRIMORDIAL);
+            Holder<FrogVariant> primordial = level.registryAccess()
+                    .registryOrThrow(Registries.FROG_VARIANT)
+                    .getHolderOrThrow(ACFrogRegistry.PRIMORDIAL_KEY);
+            setVariant(primordial);
         }
     }
 }

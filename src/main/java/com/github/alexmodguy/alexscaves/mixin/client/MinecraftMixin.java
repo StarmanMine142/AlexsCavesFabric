@@ -1,6 +1,6 @@
 package com.github.alexmodguy.alexscaves.mixin.client;
 
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.sound.ACMusics;
 import com.github.alexmodguy.alexscaves.server.entity.util.PossessesCamera;
 import com.github.alexmodguy.alexscaves.server.misc.ACTagRegistry;
@@ -56,7 +56,7 @@ public abstract class MinecraftMixin {
             cancellable = true)
     private void ac_getSituationalMusic(CallbackInfoReturnable<Music> cir) {
         if(this.player != null){
-            if(this.gui.getBossOverlay() != null && this.gui.getBossOverlay().shouldPlayMusic() && ClientProxy.primordialBossActive){
+            if(this.gui.getBossOverlay() != null && this.gui.getBossOverlay().shouldPlayMusic() && AlexsCavesClient.primordialBossActive){
                 cir.setReturnValue(ACMusics.LUXTRUCTOSAURUS_BOSS_MUSIC);
             }else{
                 Holder<Biome> holder = this.player.level().getBiome(this.player.blockPosition());

@@ -28,7 +28,7 @@ public class TremorsaurusHeldMobLayer extends RenderLayer<TremorsaurusEntity, Tr
         if (heldMob != null) {
             float riderRot = heldMob.yRotO + (heldMob.getYRot() - heldMob.yRotO) * partialTicks;
             boolean holdSideways = heldMob.getBbHeight() > heldMob.getBbWidth() + 0.2F;
-            AlexsCaves.PROXY.releaseRenderingEntity(heldMob.getUUID());
+            AlexsCaves.releaseRenderingEntity(heldMob.getUUID());
             matrixStackIn.pushPose();
             getParentModel().translateToMouth(matrixStackIn);
             matrixStackIn.translate(0, heldMob.getBbWidth() * 0.35F + 0.2F, -1F);
@@ -44,11 +44,11 @@ public class TremorsaurusHeldMobLayer extends RenderLayer<TremorsaurusEntity, Tr
                 matrixStackIn.mulPose(Axis.YP.rotationDegrees(90F));
             }
             matrixStackIn.translate(0, -heldMob.getBbHeight() * 0.5F, 0);
-            if (!AlexsCaves.PROXY.isFirstPersonPlayer(heldMob)) {
+            if (!AlexsCaves.isFirstPersonPlayer(heldMob)) {
                 renderEntity(heldMob, 0, 0, 0, 0, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
             matrixStackIn.popPose();
-            AlexsCaves.PROXY.blockRenderingEntity(heldMob.getUUID());
+            AlexsCaves.blockRenderingEntity(heldMob.getUUID());
         }
     }
 

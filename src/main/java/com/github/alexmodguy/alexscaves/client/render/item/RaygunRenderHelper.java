@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.client.render.item;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
 import com.github.alexmodguy.alexscaves.server.enchantment.ACEnchantmentHelper;
 import com.github.alexmodguy.alexscaves.server.enchantment.ACEnchantmentRegistry;
@@ -48,7 +48,7 @@ public class RaygunRenderHelper {
         float endWidth = 1.3F;
         float startMiddle = 0;
         if (irradiated) {
-            PostEffectRegistry.renderEffectForNextTick(ClientProxy.IRRADIATED_SHADER);
+            PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.IRRADIATED_SHADER);
         }
         VertexConsumer ivertexbuilder = bufferSource.getBuffer(ACRenderTypes.getRaygunRay(blue ? RAYGUN_BLUE_RAY : RAYGUN_RAY, irradiated));
         PoseStack.Pose matrixstack$entry = poseStack.last();

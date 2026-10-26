@@ -28,14 +28,9 @@ public abstract class SwampHutPieceMixin extends ScatteredFeaturePiece {
         super(type, i1, i2, i3, i4, i5, i6, direction);
     }
 
-    protected SwampHutPieceMixin(StructurePieceType type, CompoundTag tag) {
-        super(type, tag);
-    }
-
     @Inject(
             method = {"Lnet/minecraft/world/level/levelgen/structure/structures/SwampHutPiece;postProcess(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/core/BlockPos;)V"},
             remap = true,
-            cancellable = true,
             at = @At(value = "HEAD")
     )
     public void ac_calculateEntityAnimation(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfo ci) {

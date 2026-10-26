@@ -118,8 +118,8 @@ public class QuarrySmasherEntity extends Entity implements MultiPartEntity {
             } else {
                 this.reapplyPosition();
             }
-            if(isAlive()){
-                AlexsCaves.PROXY.playWorldSound(this, (byte) 14);
+            if (isAlive()) {
+                AlexsCaves.playWorldSound(this, (byte) 14);
             }
         } else if (triggerAdvancement && tickCount % 20 == 0) {
             boolean flag = false;
@@ -388,7 +388,7 @@ public class QuarrySmasherEntity extends Entity implements MultiPartEntity {
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

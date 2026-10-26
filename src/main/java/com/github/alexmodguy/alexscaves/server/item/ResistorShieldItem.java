@@ -67,7 +67,7 @@ public class ResistorShieldItem extends ShieldItem {
                 living.playSound(ACSoundRegistry.RESITOR_SHIELD_SLAM);
             }
             if (i >= 10 && i % 5 == 0) {
-                AlexsCaves.PROXY.playWorldSound(living, (byte) (scarlet ? 9 : 10));
+                AlexsCaves.playWorldSound(living, (byte) (scarlet ? 9 : 10));
                 Vec3 particlesFrom = living.position().add(0, 0.2, 0);
                 float particleMax = 5 + living.getRandom().nextInt(5);
                 for (int particles = 0; particles < particleMax; particles++) {
@@ -104,7 +104,7 @@ public class ResistorShieldItem extends ShieldItem {
 
     public void releaseUsing(ItemStack stack, Level level, LivingEntity player, int useTimeLeft) {
         super.releaseUsing(stack, level, player, useTimeLeft);
-        AlexsCaves.PROXY.clearSoundCacheFor(player);
+        AlexsCaves.clearSoundCacheFor(player);
     }
 
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean held) {

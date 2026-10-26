@@ -85,18 +85,17 @@ public class CandyCaneHookRenderer extends EntityRenderer<CandyCaneHookEntity> {
             float f1 = Mth.sin(Mth.sqrt(f) * (float) Math.PI);
             float f2 = Mth.lerp(partialTicks, player.yBodyRotO, player.yBodyRot) * ((float) Math.PI / 180F);
             boolean wormRiding = player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof CandyCaneHookItem && CandyCaneHookItem.isActive(player.getItemInHand(InteractionHand.MAIN_HAND)) && player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof CandyCaneHookItem && CandyCaneHookItem.isActive(player.getItemInHand(InteractionHand.OFF_HAND)) && player.getVehicle() instanceof GumWormSegmentEntity;
-            float rightWiggle = -Math.min(player.xxa, 0F) * (float) Math.sin(player.tickCount + AlexsCaves.PROXY.getPartialTicks());
-            float leftWiggle = Math.max(player.xxa, 0F) * (float) Math.sin(player.tickCount + AlexsCaves.PROXY.getPartialTicks());
+            float rightWiggle = -Math.min(player.xxa, 0F) * (float) Math.sin(player.tickCount + AlexsCaves.getPartialTicks());
+            float leftWiggle = Math.max(player.xxa, 0F) * (float) Math.sin(player.tickCount + AlexsCaves.getPartialTicks());
             float wiggle = i == 1 ? rightWiggle : i == -1 ? leftWiggle : 0;
             double d0 = Mth.sin(f2);
             double d1 = Mth.cos(f2);
             double d2 = (double) i * (wormRiding ? 0.45D : 0.35D);
-            double d3 = 0.8D;
             double d4;
             double d5;
             double d6;
             float f3;
-            if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && player == Minecraft.getInstance().player) {
+            if (this.entityRenderDispatcher.options.getCameraType().isFirstPerson() && player == Minecraft.getInstance().player) {
                 double d7 = 960.0D / (double) this.entityRenderDispatcher.options.fov().get().intValue();
                 Vec3 vec3 = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float) i * 0.7F, -0.5F);
                 vec3 = vec3.scale(d7);

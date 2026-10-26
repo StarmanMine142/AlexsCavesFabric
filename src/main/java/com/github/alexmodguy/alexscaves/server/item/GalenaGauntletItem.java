@@ -53,7 +53,7 @@ public class GalenaGauntletItem extends Item {
             realPlayer.getCooldowns().addCooldown(this, 5);
 
         }
-        AlexsCaves.PROXY.clearSoundCacheFor(player);
+        AlexsCaves.clearSoundCacheFor(player);
         player.playSound(ACSoundRegistry.GALENA_GAUNTLET_STOP);
     }
 
@@ -85,7 +85,7 @@ public class GalenaGauntletItem extends Item {
         if (living.getItemInHand(InteractionHand.MAIN_HAND) == stack) {
             otherHand = InteractionHand.OFF_HAND;
         }
-        AlexsCaves.PROXY.playWorldSound(living, (byte) 11);
+        AlexsCaves.playWorldSound(living, (byte) 11);
         ItemStack otherStack = living.getItemInHand(otherHand);
         boolean otherMagneticWeaponsInUse = false;
         boolean crystallization = ACEnchantmentHelper.hasEnchantment(level, ACEnchantmentRegistry.CRYSTALLIZATION, stack);

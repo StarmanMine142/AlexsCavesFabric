@@ -341,7 +341,7 @@ public class MagnetUtil {
     }
 
     public static void turnEntityOnMagnet(Entity entity, double xBy, double yBy, Direction magneticAttachmentFace) {
-        float progress = ((MagneticEntityAccessor) entity).getAttachmentProgress(AlexsCaves.PROXY.getPartialTicks());
+        float progress = ((MagneticEntityAccessor) entity).getAttachmentProgress(AlexsCaves.getPartialTicks());
         float f = (float) xBy * 0.15F;
         float f1 = (float) yBy * 0.15F * (magneticAttachmentFace == Direction.UP ? -1F : 1F);
         float magnetOffset = (magneticAttachmentFace == Direction.UP ? -180 : -90) * progress;

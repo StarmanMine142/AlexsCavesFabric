@@ -59,7 +59,7 @@ public class SundropBlock extends DirectionalBlock {
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         if (randomSource.nextInt(2) == 0) {
-            if (AlexsCaves.PROXY.checkIfParticleAt(ACParticleRegistry.SUNDROP, blockPos)) {
+            if (AlexsCaves.checkIfParticleAt(ACParticleRegistry.SUNDROP, blockPos)) {
                 level.addParticle(ACParticleRegistry.SUNDROP, (double) blockPos.getX() + 0.5F, (double) blockPos.getY() + 0.5F, (double) blockPos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
             }
         }

@@ -277,15 +277,15 @@ public class GumWormSegmentEntity extends Entity implements ICustomCollisions, K
                 this.reapplyPosition();
             }
             spawnDustParticles(false);
-            Player clientPlayer = AlexsCaves.PROXY.getClientSidePlayer();
+            Player clientPlayer = AlexsCaves.getClientSidePlayer();
             if (clientPlayer != null && clientPlayer.isPassengerOfSameVehicle(this)) {
-                if (AlexsCaves.PROXY.isKeyDown(4)){
+                if (AlexsCaves.isKeyDown(4)){
                     clientPlayer.stopRiding();
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), clientPlayer.getId(), 0));
                     postDismount(clientPlayer);
                 }
-                if (AlexsCaves.PROXY.isKeyDown(3)) {
-                    if(this.getHeadEntity() instanceof GumWormEntity gumWorm){
+                if (AlexsCaves.isKeyDown(3)) {
+                    if (this.getHeadEntity() instanceof GumWormEntity gumWorm) {
                         gumWorm.onRidingPlayerAttack();
                     }
                     AlexsCaves.sendMSGToServer(new MountedEntityKeyMessage(this.getId(), clientPlayer.getId(), 1));

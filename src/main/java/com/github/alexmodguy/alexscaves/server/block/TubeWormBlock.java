@@ -165,7 +165,7 @@ public class TubeWormBlock extends Block implements SimpleWaterloggedBlock {
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
         if (randomSource.nextInt(3) == 0 && canSupportWormAt(level, state, pos)) {
-            if (AlexsCaves.PROXY.checkIfParticleAt(ACParticleRegistry.TUBE_WORM, pos)) {
+            if (AlexsCaves.checkIfParticleAt(ACParticleRegistry.TUBE_WORM, pos)) {
                 Vec3 center = Vec3.upFromBottomCenterOf(pos, 0.5F);
                 level.addParticle(ACParticleRegistry.TUBE_WORM, center.x, center.y, center.z, 0, 0, 0);
             }

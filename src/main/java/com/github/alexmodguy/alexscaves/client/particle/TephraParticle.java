@@ -43,15 +43,15 @@ public class TephraParticle extends TextureSheetParticle {
         float f1 = 1.0F - f * 2F;
         if (ageProgress > 0.5F) {
             prevAlpha = alpha;
-            this.setAlpha(prevAlpha + (f1 - prevAlpha) * AlexsCaves.PROXY.getPartialTicks());
+            this.setAlpha(prevAlpha + (f1 - prevAlpha) * AlexsCaves.getPartialTicks());
         }
         if (this.age++ >= this.lifetime) {
             this.remove();
         } else {
             this.move(this.xd, this.yd, this.zd);
-            this.xd *= (double) this.friction;
-            this.yd *= (double) this.friction;
-            this.zd *= (double) this.friction;
+            this.xd *= this.friction;
+            this.yd *= this.friction;
+            this.zd *= this.friction;
         }
         if (spinning) {
             this.oRoll = roll;

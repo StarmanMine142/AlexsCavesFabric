@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.fabric.MultipartEntityLevel;
 import com.github.alexmodguy.alexscaves.server.entity.util.ACMultipartEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -33,11 +33,11 @@ public abstract class ClientLevelMixin extends Level {
             cancellable = true)
     private void ac_getSkyColor_timeOfDay(Vec3 position, float partialTick, CallbackInfoReturnable<Vec3> cir) {
         if (AlexsCaves.CLIENT_CONFIG.biomeSkyOverrides) {
-            if (ClientProxy.acSkyOverrideAmount > 0.0F) {
+            if (AlexsCavesClient.acSkyOverrideAmount > 0.0F) {
                 Vec3 prevVec3 = cir.getReturnValue();
-                Vec3 sampledVec3 = ClientProxy.acSkyOverrideColor;
-                sampledVec3 = ClientProxy.processSkyColor(sampledVec3, partialTick);
-                cir.setReturnValue(prevVec3.add(sampledVec3.subtract(prevVec3).scale(ClientProxy.acSkyOverrideAmount)));
+                Vec3 sampledVec3 = AlexsCavesClient.acSkyOverrideColor;
+                sampledVec3 = AlexsCavesClient.processSkyColor(sampledVec3, partialTick);
+                cir.setReturnValue(prevVec3.add(sampledVec3.subtract(prevVec3).scale(AlexsCavesClient.acSkyOverrideAmount)));
             }
         }
     }
@@ -48,8 +48,8 @@ public abstract class ClientLevelMixin extends Level {
     private void ac_getSkyDarken_timeOfDay(float partialTick, CallbackInfoReturnable<Float> cir) {
         if (AlexsCaves.CLIENT_CONFIG.biomeSkyOverrides) {
             float skyDarken = cir.getReturnValue();
-            if (ClientProxy.acSkyOverrideAmount > 0.0F) {
-                cir.setReturnValue(Math.max(skyDarken, ClientProxy.acSkyOverrideAmount));
+            if (AlexsCavesClient.acSkyOverrideAmount > 0.0F) {
+                cir.setReturnValue(Math.max(skyDarken, AlexsCavesClient.acSkyOverrideAmount));
             }
         }
     }

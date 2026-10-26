@@ -218,13 +218,13 @@ public class NuclearFurnaceBlockEntity extends BaseContainerBlockEntity implemen
             if (entity.currentWaste >= MAX_WASTE) {
                 entity.destroyWhileCritical(true);
             }
-        }else if(entity.isUndergoingFission() && !entity.isRemoved()){
-            AlexsCaves.PROXY.playWorldSound(entity, (byte)7);
+        } else if (entity.isUndergoingFission() && !entity.isRemoved()) {
+            AlexsCaves.playWorldSound(entity, (byte)7);
         }
     }
 
     public void setRemoved() {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.setRemoved();
     }
 

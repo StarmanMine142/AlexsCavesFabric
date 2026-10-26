@@ -1,22 +1,28 @@
 package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.server.block.EnergizedGalenaBlock;
 import com.github.alexmodguy.alexscaves.server.block.fluid.ACFluidRegistry;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.ViewArea;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.LightLayer;
@@ -29,6 +35,7 @@ import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -49,8 +56,11 @@ public abstract class LevelRendererMixin {
     @Shadow @Final private static ResourceLocation SUN_LOCATION;
     @Shadow @Final private static ResourceLocation MOON_LOCATION;
 
+    @Unique
     private int aclastCameraChunkX;
+    @Unique
     private int aclastCameraChunkY;
+    @Unique
     private int aclastCameraChunkZ;
 
     @Shadow
@@ -73,6 +83,7 @@ public abstract class LevelRendererMixin {
                 this.aclastCameraChunkX = i;
                 this.aclastCameraChunkY = j;
                 this.aclastCameraChunkZ = k;
+                assert viewArea != null;
                 viewArea.repositionCamera(d0, d2);
             }
         }
@@ -91,140 +102,19 @@ public abstract class LevelRendererMixin {
                     || eyeType == ACFluidRegistry.PURPLE_SODA_FLUID_FLOWING;
             if (inAcid || inSoda) {
                 ci.cancel();
-                ac_renderFluidSky(projectionMatrix, partialTick, camera, foggy, runnable, inAcid);
+                runnable.run();
+                ac_renderSkyCube(camera, inAcid ? 0.0F : 0.6F, inAcid ? 1.0F : 0.1F, inAcid ? 0.0F : 0.85F);
                 return;
             }
         }
 
-        float override = ClientProxy.acSkyOverrideAmount;
-        float primordialBoss = AlexsCaves.PROXY.getPrimordialBossActiveAmount(partialTick);
+        float override = AlexsCavesClient.acSkyOverrideAmount;
+        float primordialBoss = AlexsCaves.getPrimordialBossActiveAmount(partialTick);
         if (!AlexsCaves.CLIENT_CONFIG.biomeSkyOverrides || override <= 0.0F && primordialBoss <= 0.0F) {
             return;
         }
         ci.cancel();
 
-        PoseStack poseStack = new PoseStack();
-        runnable.run();
-        if (!foggy) {
-            FogType fogtype = camera.getFluidInCamera();
-            if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA && !this.doesMobEffectBlockSky(camera)) {
-                if (this.minecraft.level.effects().skyType() == DimensionSpecialEffects.SkyType.END) {
-                    this.renderEndSky(poseStack);
-                } else if (this.minecraft.level.effects().skyType() == DimensionSpecialEffects.SkyType.NORMAL) {
-                    Vec3 vec3 = this.level.getSkyColor(this.minecraft.gameRenderer.getMainCamera().getPosition(), partialTick);
-                    vec3 = ClientProxy.processSkyColor(vec3, partialTick);
-                    float f = (float) vec3.x;
-                    float f1 = (float) vec3.y;
-                    float f2 = (float) vec3.z;
-                    FogRenderer.levelFogColor();
-                    RenderSystem.depthMask(false);
-                    RenderSystem.setShaderColor(f, f1, f2, 1.0F);
-                    ShaderInstance shaderinstance = RenderSystem.getShader();
-                    this.skyBuffer.bind();
-                    this.skyBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
-                    VertexBuffer.unbind();
-                    RenderSystem.enableBlend();
-                    float[] afloat = this.level.effects().getSunriseColor(this.level.getTimeOfDay(partialTick), partialTick);
-
-                    if (afloat != null && afloat.length >= 4 && AlexsCaves.CLIENT_CONFIG.biomeSkyOverrides) {
-                        afloat[3] = afloat[3] * (1F - override);
-                    }
-
-                    if (afloat != null) {
-                        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-                        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                        poseStack.pushPose();
-                        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-                        float f3 = Mth.sin(this.level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
-                        poseStack.mulPose(Axis.ZP.rotationDegrees(f3));
-                        poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-                        float f4 = afloat[0];
-                        float f5 = afloat[1];
-                        float f6 = afloat[2];
-                        Matrix4f matrix4f = poseStack.last().pose();
-                        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-                        bufferbuilder.addVertex(matrix4f, 0.0F, 100.0F, 0.0F).setColor(f4, f5, f6, afloat[3]);
-                        int i = 16;
-
-                        for (int j = 0; j <= 16; ++j) {
-                            float f7 = (float) j * ((float) Math.PI * 2F) / 16.0F;
-                            float f8 = Mth.sin(f7);
-                            float f9 = Mth.cos(f7);
-                            bufferbuilder.addVertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * afloat[3]).setColor(afloat[0], afloat[1], afloat[2], 0.0F);
-                        }
-
-                        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-                        poseStack.popPose();
-                    }
-
-                    RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-                    poseStack.pushPose();
-                    float rainLevel = this.level.getRainLevel(partialTick);
-                    rainLevel = Math.max(override, rainLevel);
-                    float f11 = 1.0F - rainLevel;
-                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
-                    poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
-                    poseStack.mulPose(Axis.XP.rotationDegrees(this.level.getTimeOfDay(partialTick) * 360.0F));
-                    Matrix4f matrix4f1 = poseStack.last().pose();
-                    float f12 = 30.0F;
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                    RenderSystem.setShaderTexture(0, SUN_LOCATION);
-                    BufferBuilder sunBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-                    sunBuilder.addVertex(matrix4f1, -f12, 100.0F, -f12).setUv(0.0F, 0.0F);
-                    sunBuilder.addVertex(matrix4f1, f12, 100.0F, -f12).setUv(1.0F, 0.0F);
-                    sunBuilder.addVertex(matrix4f1, f12, 100.0F, f12).setUv(1.0F, 1.0F);
-                    sunBuilder.addVertex(matrix4f1, -f12, 100.0F, f12).setUv(0.0F, 1.0F);
-                    BufferUploader.drawWithShader(sunBuilder.buildOrThrow());
-                    f12 = 20.0F;
-                    RenderSystem.setShaderTexture(0, MOON_LOCATION);
-                    int k = this.level.getMoonPhase();
-                    int l = k % 4;
-                    int i1 = k / 4 % 2;
-                    float f13 = (float) (l + 0) / 4.0F;
-                    float f14 = (float) (i1 + 0) / 2.0F;
-                    float f15 = (float) (l + 1) / 4.0F;
-                    float f16 = (float) (i1 + 1) / 2.0F;
-                    BufferBuilder moonBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-                    moonBuilder.addVertex(matrix4f1, -f12, -100.0F, f12).setUv(f15, f16);
-                    moonBuilder.addVertex(matrix4f1, f12, -100.0F, f12).setUv(f13, f16);
-                    moonBuilder.addVertex(matrix4f1, f12, -100.0F, -f12).setUv(f13, f14);
-                    moonBuilder.addVertex(matrix4f1, -f12, -100.0F, -f12).setUv(f15, f14);
-                    BufferUploader.drawWithShader(moonBuilder.buildOrThrow());
-                    float f10 = this.level.getStarBrightness(partialTick) * f11;
-                    if (f10 > 0.0F) {
-                        RenderSystem.setShaderColor(f10, f10, f10, f10);
-                        FogRenderer.setupNoFog();
-                        this.starBuffer.bind();
-                        this.starBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
-                        VertexBuffer.unbind();
-                        runnable.run();
-                    }
-
-                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                    RenderSystem.disableBlend();
-                    RenderSystem.defaultBlendFunc();
-                    poseStack.popPose();
-                    RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
-                    double horizonHeight = this.level.getLevelData().getHorizonHeight(this.level);
-                    double d0 = this.minecraft.player.getEyePosition(partialTick).y - horizonHeight;
-                    if (d0 < 0.0D) {
-                        poseStack.pushPose();
-                        poseStack.translate(0.0F, 12.0F, 0.0F);
-                        this.darkBuffer.bind();
-                        this.darkBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
-                        VertexBuffer.unbind();
-                        poseStack.popPose();
-                    }
-
-                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                    RenderSystem.depthMask(true);
-                }
-            }
-        }
-    }
-
-    private void ac_renderFluidSky(Matrix4f projectionMatrix, float partialTick, Camera camera, boolean foggy,
-                                   Runnable runnable, boolean inAcid) {
         runnable.run();
         if (foggy) {
             return;
@@ -233,21 +123,18 @@ public abstract class LevelRendererMixin {
         if (fogtype == FogType.POWDER_SNOW || fogtype == FogType.LAVA || this.doesMobEffectBlockSky(camera)) {
             return;
         }
+        assert this.minecraft.level != null;
         if (this.minecraft.level.effects().skyType() != DimensionSpecialEffects.SkyType.NORMAL) {
             return;
         }
 
-        float r, g, b;
-        if (inAcid) {
-            r = 0.0F;
-            g = 1.0F;
-            b = 0.0F;
-        } else {
-            r = 0.6F;
-            g = 0.1F;
-            b = 0.85F;
-        }
+        Vec3 skyColor = this.level.getSkyColor(this.minecraft.gameRenderer.getMainCamera().getPosition(), partialTick);
+        skyColor = AlexsCavesClient.processSkyColor(skyColor, partialTick);
+        ac_renderSkyCube(camera, (float) skyColor.x, (float) skyColor.y, (float) skyColor.z);
+    }
 
+    @Unique
+    private void ac_renderSkyCube(Camera camera, float r, float g, float b) {
         Vec3 camPos = camera.getPosition();
         float cx = (float) camPos.x;
         float cy = (float) camPos.y;

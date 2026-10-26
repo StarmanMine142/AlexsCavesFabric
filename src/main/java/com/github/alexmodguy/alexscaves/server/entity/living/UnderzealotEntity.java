@@ -216,17 +216,17 @@ public class UnderzealotEntity extends Monster implements PackAnimal, IAnimatedE
                 carryingId = this.getFirstPassenger() == null ? -1 : this.getFirstPassenger().getId();
             }
             this.level().addParticle(ACParticleRegistry.VOID_BEING_CLOUD, particleAt.x, particleAt.y, particleAt.z, 1F, carryingId, 5 + random.nextInt(4));
-        } else if(b == 77){
+        } else if(b == 77) {
             if(this.isAlive()){
-                AlexsCaves.PROXY.playWorldSound(this, (byte) 5);
+                AlexsCaves.playWorldSound(this, (byte) 5);
             }
-        }else {
+        } else {
             super.handleEntityEvent(b);
         }
     }
 
     public void remove(Entity.RemovalReason removalReason) {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
+        AlexsCaves.clearSoundCacheFor(this);
         super.remove(removalReason);
     }
 

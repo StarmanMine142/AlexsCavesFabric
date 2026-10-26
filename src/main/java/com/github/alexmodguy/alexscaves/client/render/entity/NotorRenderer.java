@@ -2,7 +2,7 @@ package com.github.alexmodguy.alexscaves.client.render.entity;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.citadel.client.shader.PostEffectRegistry;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.model.*;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
 import com.github.alexmodguy.alexscaves.client.render.ColorUtil;
@@ -71,7 +71,7 @@ public class NotorRenderer extends MobRenderer<NotorEntity, NotorModel> {
             Vec3 hologramScanPos = entity.getBeamEndPosition(partialTicks);
             float beamProgress = entity.getBeamProgress(partialTicks);
             if (hologramEntity != null && entity.showingHologram()) {
-                PostEffectRegistry.renderEffectForNextTick(ClientProxy.HOLOGRAM_SHADER);
+                PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.HOLOGRAM_SHADER);
                 poseStack.pushPose();
                 poseStack.translate(hologramScanPos.x - renderAt.x, hologramScanPos.y - renderAt.y, hologramScanPos.z - renderAt.z);
                 poseStack.scale(1F, entity.getHologramProgress(partialTicks), 1F);
@@ -97,7 +97,7 @@ public class NotorRenderer extends MobRenderer<NotorEntity, NotorModel> {
                 }
                 PoseStack.Pose posestack$pose = poseStack.last();
                 Matrix4f matrix4f1 = posestack$pose.pose();
-                PostEffectRegistry.renderEffectForNextTick(ClientProxy.HOLOGRAM_SHADER);
+                PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.HOLOGRAM_SHADER);
                 VertexConsumer lightConsumer = source.getBuffer(ACRenderTypes.getHologramLights());
                 shineOriginVertex(lightConsumer, matrix4f1, 0, 0);
                 shineLeftCornerVertex(lightConsumer, matrix4f1, length, width, 0, 0);
@@ -110,7 +110,7 @@ public class NotorRenderer extends MobRenderer<NotorEntity, NotorModel> {
     }
 
     public static <E extends Entity> void renderEntityInHologram(E entityIn, double x, double y, double z, float yaw, float partialTicks, PoseStack matrixStack, MultiBufferSource bufferIn, int packedLight) {
-        PostEffectRegistry.renderEffectForNextTick(ClientProxy.HOLOGRAM_SHADER);
+        PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.HOLOGRAM_SHADER);
 
         EntityRenderer<? super E> render = null;
         EntityRenderDispatcher manager = Minecraft.getInstance().getEntityRenderDispatcher();
@@ -263,7 +263,7 @@ public class NotorRenderer extends MobRenderer<NotorEntity, NotorModel> {
             this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0.0F), ColorUtil.packColor(1.0F, 1.0F, 1.0F, alpha));
             VertexConsumer ivertexbuilder2;
             if (entitylivingbaseIn.getBeamProgress(partialTicks) > 0) {
-                PostEffectRegistry.renderEffectForNextTick(ClientProxy.HOLOGRAM_SHADER);
+                PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.HOLOGRAM_SHADER);
                 ivertexbuilder2 = bufferIn.getBuffer(ACRenderTypes.getHologram(TEXTURE_EYES));
             } else {
                 ivertexbuilder2 = bufferIn.getBuffer(RenderType.eyes(TEXTURE_EYES));

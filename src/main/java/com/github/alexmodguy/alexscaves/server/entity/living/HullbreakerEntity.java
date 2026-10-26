@@ -356,8 +356,8 @@ public class HullbreakerEntity extends WaterAnimal implements IAnimatedEntity, K
 
     private double swimDegree(float width, float sinOffset) {
         double move = Math.cos(this.walkAnimation.position() * 0.33F + sinOffset) * this.walkAnimation.speed() * width * 0.8F;
-        double idle = Math.sin((tickCount + AlexsCaves.PROXY.getPartialTicks()) * 0.05F + sinOffset) * width * 0.5F;
-        return (move + idle * (1 - this.walkAnimation.speed())) * (1 - getLandProgress(AlexsCaves.PROXY.getPartialTicks()));
+        double idle = Math.sin((tickCount + AlexsCaves.getPartialTicks()) * 0.05F + sinOffset) * width * 0.5F;
+        return (move + idle * (1 - this.walkAnimation.speed())) * (1 - getLandProgress(AlexsCaves.getPartialTicks()));
     }
 
     private Vec3 rotateOffsetVec(Vec3 offset, float xRot, float yRot) {

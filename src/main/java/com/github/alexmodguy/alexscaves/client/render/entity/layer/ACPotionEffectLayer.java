@@ -2,7 +2,7 @@ package com.github.alexmodguy.alexscaves.client.render.entity.layer;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.citadel.client.shader.PostEffectRegistry;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.render.ACRenderTypes;
 import com.github.alexmodguy.alexscaves.client.render.ColorUtil;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
@@ -93,7 +93,7 @@ public class ACPotionEffectLayer extends RenderLayer {
         if (entity instanceof LivingEntity living) {
             if (living.hasEffect(ACEffectRegistry.IRRADIATED)
                     && AlexsCaves.CLIENT_CONFIG.radiationGlowEffect) {
-                PostEffectRegistry.renderEffectForNextTick(ClientProxy.IRRADIATED_SHADER);
+                PostEffectRegistry.renderEffectForNextTick(AlexsCavesClient.IRRADIATED_SHADER);
                 int level = living.getEffect(ACEffectRegistry.IRRADIATED).getAmplifier() + 1;
                 VertexConsumer ivertexbuilder = bufferIn.getBuffer(level >= IrradiatedEffect.BLUE_LEVEL
                         ? ACRenderTypes.getBlueRadiationGlow(getTextureLocation(entity))
@@ -101,11 +101,11 @@ public class ACPotionEffectLayer extends RenderLayer {
                 float alpha = level >= IrradiatedEffect.BLUE_LEVEL ? 0.9F : Math.min(level * 0.33F, 1F);
                 poseStack.pushPose();
                 this.getParentModel().renderToBuffer(poseStack, ivertexbuilder, packedLightIn,
-                        LivingEntityRenderer.getOverlayCoords((LivingEntity) entity, 0), ColorUtil.packColor(1.0F, 1.0F, 1.0F, alpha));
+                        LivingEntityRenderer.getOverlayCoords(living, 0), ColorUtil.packColor(1.0F, 1.0F, 1.0F, alpha));
                 poseStack.popPose();
             }
             // Check both the MobEffect (for local player) and client-side visual tracker (for remote entities)
-            if ((living.hasEffect(ACEffectRegistry.BUBBLED) || AlexsCaves.PROXY.hasBubbledEffectVisual(living.getId())) && living.isAlive()) {
+            if ((living.hasEffect(ACEffectRegistry.BUBBLED) || AlexsCaves.hasBubbledEffectVisual(living.getId())) && living.isAlive()) {
                 float bodyYaw = Mth.rotLerp(partialTicks, living.yBodyRotO, living.yBodyRot);
                 poseStack.pushPose();
                 float size = (float) Math.ceil(Math.max(living.getBbHeight(), living.getBbWidth()));
@@ -128,13 +128,13 @@ public class ACPotionEffectLayer extends RenderLayer {
                 poseStack.pushPose();
                 float alpha = DarknessIncarnateEffect.getIntensity(living, partialTicks, 25F);
                 this.getParentModel().renderToBuffer(poseStack, ivertexbuilder, 0,
-                        LivingEntityRenderer.getOverlayCoords((LivingEntity) entity, 0), ColorUtil.packColor(0.0F, 0.0F, 0.0F, alpha));
+                        LivingEntityRenderer.getOverlayCoords(living, 0), ColorUtil.packColor(0.0F, 0.0F, 0.0F, alpha));
                 poseStack.popPose();
             }
             if (living.hasEffect(ACEffectRegistry.SUGAR_RUSH) && getParentModel() instanceof HumanoidModel<?>) {
                 VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutoutNoCull(TEXTURE_SUGAR_RUSH));
                 this.getParentModel().renderToBuffer(poseStack, ivertexbuilder, packedLightIn,
-                        LivingEntityRenderer.getOverlayCoords((LivingEntity) entity, 0), ColorUtil.packColor(1.0F, 1.0F, 1.0F, 1.0F));
+                        LivingEntityRenderer.getOverlayCoords(living, 0), ColorUtil.packColor(1.0F, 1.0F, 1.0F, 1.0F));
             }
         }
     }
@@ -175,16 +175,16 @@ public class ACPotionEffectLayer extends RenderLayer {
             colorB = waterColorAt & 255;
         }
         vertexConsumer.addVertex(matrix4f, f1, f3, f5).setColor(colorR, colorG, colorB, colorA)
-                .setUv((float) 0, (float) textureScaleY + uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
+                .setUv(0, textureScaleY + uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
                 .setNormal(0.0F, -1.0F, 0.0F);
         vertexConsumer.addVertex(matrix4f, f2, f3, f6).setColor(colorR, colorG, colorB, colorA)
-                .setUv((float) textureScaleXZ, (float) textureScaleY + uvOffset).setOverlay(overlayCoords)
+                .setUv(textureScaleXZ, textureScaleY + uvOffset).setOverlay(overlayCoords)
                 .setLight(packedLightIn).setNormal(0.0F, -1.0F, 0.0F);
         vertexConsumer.addVertex(matrix4f, f2, f4, f7).setColor(colorR, colorG, colorB, colorA)
-                .setUv((float) textureScaleXZ, (float) uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
+                .setUv(textureScaleXZ, uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
                 .setNormal(0.0F, -1.0F, 0.0F);
         vertexConsumer.addVertex(matrix4f, f1, f4, f8).setColor(colorR, colorG, colorB, colorA)
-                .setUv((float) 0, (float) uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
+                .setUv(0, uvOffset).setOverlay(overlayCoords).setLight(packedLightIn)
                 .setNormal(0.0F, -1.0F, 0.0F);
     }
 }

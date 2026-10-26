@@ -83,14 +83,14 @@ public class SubmarineRenderer extends EntityRenderer<SubmarineEntity> {
             if (passenger == player && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
                 continue;
             }
-            AlexsCaves.PROXY.releaseRenderingEntity(passenger.getUUID());
+            AlexsCaves.releaseRenderingEntity(passenger.getUUID());
             poseStack.pushPose();
             poseStack.translate(0, 0.65F, -0.75F);
             poseStack.mulPose(Axis.XN.rotationDegrees(180F));
             poseStack.mulPose(Axis.YN.rotationDegrees(360 - submarineYaw));
             renderPassenger(passenger, 0, 0, 0, 0, partialTicks, poseStack, source, lightIn);
             poseStack.popPose();
-            AlexsCaves.PROXY.blockRenderingEntity(passenger.getUUID());
+            AlexsCaves.blockRenderingEntity(passenger.getUUID());
         }
         VertexConsumer textureBuffer = source.getBuffer(RenderType.entityCutoutNoCull(getSubmarineBaseTexture(entity)));
         MODEL.renderToBuffer(poseStack, textureBuffer, lightIn, OverlayTexture.NO_OVERLAY, -1);

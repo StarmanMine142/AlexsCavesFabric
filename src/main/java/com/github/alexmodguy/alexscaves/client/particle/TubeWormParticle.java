@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.client.particle;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.model.TubeWormModel;
 import com.github.alexmodguy.alexscaves.server.block.TubeWormBlock;
 import com.github.alexmodguy.alexscaves.server.misc.ACMath;
@@ -85,15 +85,15 @@ public class TubeWormParticle extends Particle {
 
     public void remove() {
         super.remove();
-        ((ClientProxy) AlexsCaves.PROXY).removeParticleAt(this.blockPos);
+        AlexsCaves.removeParticleAt(this.blockPos);
     }
 
     public void render(VertexConsumer vertexConsumer, Camera camera, float partialTick) {
         Vec3 vec3 = camera.getPosition();
         float scale = 1;
-        float f = (float) (Mth.lerp((double) partialTick, this.xo, this.x) - vec3.x());
-        float f1 = (float) (Mth.lerp((double) partialTick, this.yo, this.y) - vec3.y());
-        float f2 = (float) (Mth.lerp((double) partialTick, this.zo, this.z) - vec3.z());
+        float f = (float) (Mth.lerp( partialTick, this.xo, this.x) - vec3.x());
+        float f1 = (float) (Mth.lerp( partialTick, this.yo, this.y) - vec3.y());
+        float f2 = (float) (Mth.lerp( partialTick, this.zo, this.z) - vec3.z());
         float lerpedTuck = prevTuckAmount + (tuckAmount - prevTuckAmount) * partialTick;
         PoseStack posestack = new PoseStack();
         posestack.pushPose();

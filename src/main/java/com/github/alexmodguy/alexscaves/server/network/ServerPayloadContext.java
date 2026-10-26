@@ -1,5 +1,6 @@
-package com.github.alexmodguy.alexscaves.fabric;
+package com.github.alexmodguy.alexscaves.server.network;
 
+import com.github.alexmodguy.alexscaves.ACPayloadContext;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.world.entity.player.Player;
 

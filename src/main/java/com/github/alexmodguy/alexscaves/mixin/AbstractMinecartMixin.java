@@ -396,11 +396,11 @@ public abstract class AbstractMinecartMixin extends VehicleEntity implements Min
             cancellable = true
     )
     public void ac_getPos(double x, double y, double z, CallbackInfoReturnable<Vec3> cir) {
-        double magLevAmount = prevMagLevProgress + (magLevProgress - prevMagLevProgress) * AlexsCaves.PROXY.getPartialTicks();
+        double magLevAmount = prevMagLevProgress + (magLevProgress - prevMagLevProgress) * AlexsCaves.getPartialTicks();
         if (magLevAmount >= 0.0F) {
-            double yClientSide = yOld + (this.getY() - yOld) * AlexsCaves.PROXY.getPartialTicks();
+            double yClientSide = yOld + (this.getY() - yOld) * AlexsCaves.getPartialTicks();
             Vec3 prev = cir.getReturnValue();
-            Vec3 modified = prev == null ? this.getPosition(AlexsCaves.PROXY.getPartialTicks()) : new Vec3(prev.x, prev.y + (yClientSide - prev.y) * magLevAmount, prev.z);
+            Vec3 modified = prev == null ? this.getPosition(AlexsCaves.getPartialTicks()) : new Vec3(prev.x, prev.y + (yClientSide - prev.y) * magLevAmount, prev.z);
             cir.setReturnValue(modified);
         }
     }
@@ -412,11 +412,11 @@ public abstract class AbstractMinecartMixin extends VehicleEntity implements Min
             cancellable = true
     )
     public void ac_getPosOffs(double x, double y, double z, double offset, CallbackInfoReturnable<Vec3> cir) {
-        double magLevAmount = prevMagLevProgress + (magLevProgress - prevMagLevProgress) * AlexsCaves.PROXY.getPartialTicks();
+        double magLevAmount = prevMagLevProgress + (magLevProgress - prevMagLevProgress) * AlexsCaves.getPartialTicks();
         if (magLevAmount >= 0.0F) {
-            double yClientSide = yOld + (this.getY() - yOld) * AlexsCaves.PROXY.getPartialTicks();
+            double yClientSide = yOld + (this.getY() - yOld) * AlexsCaves.getPartialTicks();
             Vec3 prev = cir.getReturnValue();
-            Vec3 modified = prev == null ? this.getPosition(AlexsCaves.PROXY.getPartialTicks()) : new Vec3(prev.x, prev.y + (yClientSide - prev.y) * magLevAmount, prev.z);
+            Vec3 modified = prev == null ? this.getPosition(AlexsCaves.getPartialTicks()) : new Vec3(prev.x, prev.y + (yClientSide - prev.y) * magLevAmount, prev.z);
             cir.setReturnValue(modified);
         }
     }

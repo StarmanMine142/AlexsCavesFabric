@@ -56,7 +56,7 @@ public class HologramProjectorBlockEntity extends BlockEntity {
                 entity.markUpdated();
             }
             if (!entity.isRemoved() && level.isClientSide) {
-                AlexsCaves.PROXY.playWorldSound(entity, (byte) 3);
+                AlexsCaves.playWorldSound(entity, (byte) 3);
             }
         }
         if (entity.isPlayerRender() && entity.lastPlayerUUID == null) {
@@ -190,8 +190,8 @@ public class HologramProjectorBlockEntity extends BlockEntity {
     }
 
     public void setRemoved() {
-        AlexsCaves.PROXY.clearSoundCacheFor(this);
-        level.playSound((Player) null, this.getBlockPos(), ACSoundRegistry.HOLOGRAM_STOP, SoundSource.BLOCKS);
+        AlexsCaves.clearSoundCacheFor(this);
+        level.playSound(null, this.getBlockPos(), ACSoundRegistry.HOLOGRAM_STOP, SoundSource.BLOCKS);
         super.setRemoved();
     }
 }

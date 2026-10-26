@@ -28,7 +28,7 @@ public class ForsakenHeldMobLayer extends RenderLayer<ForsakenEntity, ForsakenMo
     public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, ForsakenEntity forsaken, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         Entity heldMob = forsaken.getHeldMob();
         if (heldMob != null) {
-            AlexsCaves.PROXY.releaseRenderingEntity(heldMob.getUUID());
+            AlexsCaves.releaseRenderingEntity(heldMob.getUUID());
             float vehicleRot = forsaken.yBodyRotO + (forsaken.yBodyRot - forsaken.yBodyRotO) * partialTicks;
             float riderRot = 0;
             float animationIntensity = ACMath.cullAnimationTick(forsaken.getAnimationTick(), 1F, forsaken.getAnimation(), partialTicks, 25, 30) * 0.75F;
@@ -48,11 +48,11 @@ public class ForsakenHeldMobLayer extends RenderLayer<ForsakenEntity, ForsakenMo
             matrixStackIn.translate(handPosition.x, handPosition.y, handPosition.z);
             matrixStackIn.mulPose(Axis.ZP.rotationDegrees(180F));
             matrixStackIn.mulPose(Axis.YP.rotationDegrees(vehicleRot - riderRot));
-            if (!AlexsCaves.PROXY.isFirstPersonPlayer(heldMob)) {
+            if (!AlexsCaves.isFirstPersonPlayer(heldMob)) {
                 renderEntity(heldMob, 0, 0, 0, 0, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
             matrixStackIn.popPose();
-            AlexsCaves.PROXY.blockRenderingEntity(heldMob.getUUID());
+            AlexsCaves.blockRenderingEntity(heldMob.getUUID());
         }
     }
 

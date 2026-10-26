@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.client.ClientProxy;
+import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.server.block.ACBlockRegistry;
 import com.github.alexmodguy.alexscaves.server.block.fluid.ACFluidRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
@@ -71,19 +71,19 @@ public abstract class FogRendererMixin {
             return;
         }
         if (camera.getFluidInCamera() == FogType.NONE && AlexsCaves.CLIENT_CONFIG.biomeSkyFogOverrides) {
-            float override = ClientProxy.acSkyOverrideAmount;
+            float override = AlexsCavesClient.acSkyOverrideAmount;
             float setR = fogRed;
             float setG = fogGreen;
             float setB = fogBlue;
             boolean changed = false;
             if (override > 0.0F) {
-                Vec3 sampledFog = ClientProxy.getLastSampledFogColor();
+                Vec3 sampledFog = AlexsCavesClient.getLastSampledFogColor();
                 setR += (float) ((sampledFog.x - setR) * override);
                 setG += (float) ((sampledFog.y - setG) * override);
                 setB += (float) ((sampledFog.z - setB) * override);
                 changed = true;
             }
-            float primordialBossAmount = AlexsCaves.PROXY.getPrimordialBossActiveAmount(partialTick);
+            float primordialBossAmount = AlexsCaves.getPrimordialBossActiveAmount(partialTick);
             if (primordialBossAmount > 0.0F) {
                 setR += (0.8F - setR) * primordialBossAmount;
                 setG += (0.2F - setG) * primordialBossAmount;
@@ -98,9 +98,9 @@ public abstract class FogRendererMixin {
             return;
         }
         if (camera.getFluidInCamera() == FogType.WATER && AlexsCaves.CLIENT_CONFIG.biomeWaterFogOverrides) {
-            float override = ClientProxy.acSkyOverrideAmount;
+            float override = AlexsCavesClient.acSkyOverrideAmount;
             if (override > 0.0F) {
-                Vec3 sampledWaterFog = ClientProxy.getLastSampledWaterFogColor();
+                Vec3 sampledWaterFog = AlexsCavesClient.getLastSampledWaterFogColor();
                 fogRed += (float) ((sampledWaterFog.x - fogRed) * override);
                 fogGreen += (float) ((sampledWaterFog.y - fogGreen) * override);
                 fogBlue += (float) ((sampledWaterFog.z - fogBlue) * override);
@@ -150,7 +150,7 @@ public abstract class FogRendererMixin {
             return;
         }
         if (camera.getFluidInCamera() == FogType.WATER && AlexsCaves.CLIENT_CONFIG.biomeWaterFogOverrides) {
-            float farness = ClientProxy.getLastSampledWaterFogFarness();
+            float farness = AlexsCavesClient.getLastSampledWaterFogFarness();
             if (minecraft.player != null && minecraft.player.hasEffect(ACEffectRegistry.DEEPSIGHT)) {
                 farness *= 1.0F + 1.5F * DeepsightEffect.getIntensity(minecraft.player, partialTick);
             }
@@ -161,8 +161,8 @@ public abstract class FogRendererMixin {
         }
         if (mode == FogRenderer.FogMode.FOG_TERRAIN && camera.getFluidInCamera() == FogType.NONE
                 && AlexsCaves.CLIENT_CONFIG.biomeSkyFogOverrides) {
-            float nearness = ClientProxy.getLastSampledFogNearness();
-            float primordialBossAmount = AlexsCaves.PROXY.getPrimordialBossActiveAmount(partialTick);
+            float nearness = AlexsCavesClient.getLastSampledFogNearness();
+            float primordialBossAmount = AlexsCaves.getPrimordialBossActiveAmount(partialTick);
             if (primordialBossAmount > 0.0F) {
                 nearness *= 1.0F - primordialBossAmount * 0.75F;
             }
