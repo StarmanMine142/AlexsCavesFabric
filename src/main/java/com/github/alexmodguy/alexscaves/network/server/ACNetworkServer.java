@@ -1,8 +1,8 @@
-package com.github.alexmodguy.alexscaves.server.network;
+package com.github.alexmodguy.alexscaves.network.server;
 
 import com.github.alexmodguy.alexscaves.citadel.server.message.AnimationMessage;
 import com.github.alexmodguy.alexscaves.citadel.server.message.PropertiesMessage;
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
 import com.github.alexmodguy.alexscaves.server.message.*;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -10,10 +10,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public final class ACNetworkingFabric {
+public final class ACNetworkServer {
     private static boolean initialized;
 
-    private ACNetworkingFabric() {
+    private ACNetworkServer() {
     }
 
     public static void registerCommon() {

@@ -1,6 +1,6 @@
 package com.github.alexmodguy.alexscaves.mixin;
 
-import com.github.alexmodguy.alexscaves.fabric.MultipartEntityLevel;
+import com.github.alexmodguy.alexscaves.multipart.MultipartEntityLevel;
 import com.github.alexmodguy.alexscaves.server.entity.util.ACMultipartEntity;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

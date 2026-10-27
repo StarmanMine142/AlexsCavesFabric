@@ -1,6 +1,6 @@
 package com.github.alexmodguy.alexscaves.mixin;
 
-import com.github.alexmodguy.alexscaves.fabric.MultipartEntityLevel;
+import com.github.alexmodguy.alexscaves.multipart.MultipartEntityLevel;
 import com.github.alexmodguy.alexscaves.server.entity.util.ACMultipartEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;

@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
 import com.github.alexmodguy.alexscaves.mixin.LivingEntityAccessor;
 import com.github.alexmodguy.alexscaves.server.entity.util.MagnetUtil;
 import net.minecraft.network.FriendlyByteBuf;

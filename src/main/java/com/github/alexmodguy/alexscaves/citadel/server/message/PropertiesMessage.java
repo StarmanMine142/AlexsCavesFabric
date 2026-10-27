@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.citadel.server.message;
 
 import com.github.alexmodguy.alexscaves.citadel.server.entity.CitadelEntityData;
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

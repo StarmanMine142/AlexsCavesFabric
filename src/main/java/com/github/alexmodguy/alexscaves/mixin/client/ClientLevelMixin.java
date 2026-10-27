@@ -2,7 +2,7 @@ package com.github.alexmodguy.alexscaves.mixin.client;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
 import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
-import com.github.alexmodguy.alexscaves.fabric.MultipartEntityLevel;
+import com.github.alexmodguy.alexscaves.multipart.MultipartEntityLevel;
 import com.github.alexmodguy.alexscaves.server.entity.util.ACMultipartEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;

@@ -1,4 +1,4 @@
-package com.github.alexmodguy.alexscaves.fabric;
+package com.github.alexmodguy.alexscaves.multipart;
 
 import com.github.alexmodguy.alexscaves.server.entity.util.ACMultipartEntity;
 import com.github.alexmodguy.alexscaves.server.entity.util.MultiPartEntity;
@@ -6,9 +6,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
-public final class ACMultipartFabric {
+public final class ACMultipartServer {
 
-    private ACMultipartFabric() {
+    private ACMultipartServer() {
     }
 
     public static void registerCommon() {

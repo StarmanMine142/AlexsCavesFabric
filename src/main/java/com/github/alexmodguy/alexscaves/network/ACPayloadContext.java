@@ -1,4 +1,4 @@
-package com.github.alexmodguy.alexscaves;
+package com.github.alexmodguy.alexscaves.network;
 
 import net.minecraft.world.entity.player.Player;
 

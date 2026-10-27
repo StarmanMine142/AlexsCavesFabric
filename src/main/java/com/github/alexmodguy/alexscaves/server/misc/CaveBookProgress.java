@@ -1,12 +1,9 @@
 package com.github.alexmodguy.alexscaves.server.misc;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.citadel.server.entity.CitadelEntityData;
-import com.github.alexmodguy.alexscaves.citadel.server.message.PropertiesMessage;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import com.github.alexmodguy.alexscaves.citadel.server.entity.CitadelEntityData;
+import com.github.alexmodguy.alexscaves.server.message.CaveBookProgressSyncMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
@@ -15,7 +12,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class CaveBookProgress {
 
@@ -43,28 +43,14 @@ public class CaveBookProgress {
         CompoundTag savedTag = caveBookProgress.save();
         CompoundTag tag = CitadelEntityData.getOrCreateCitadelTag(player);
         tag.put(PLAYER_CAVE_BOOK_PROGRESS_TAG, savedTag);
-        CitadelEntityData.setCitadelTag(player, tag);
-        if (!player.level().isClientSide) {
-            syncCaveBookProgress(player);
-        } else {
-            ClientPlayNetworking.send(new PropertiesMessage("CitadelTagUpdate", tag, player.getId()));
+                CitadelEntityData.getOrCreateCitadelTag(player);
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            AlexsCaves.sendNonLocal(new CaveBookProgressSyncMessage(tag.copy()), serverPlayer);
         }
     }
 
-    public static void syncCaveBookProgress(Player player) {
-        if (!player.level().isClientSide) {
-            PropertiesMessage msg = new PropertiesMessage("CitadelTagUpdate", CitadelEntityData.getOrCreateCitadelTag(player), player.getId());
-            Set<ServerPlayer> targets = new HashSet<>(PlayerLookup.tracking(player));
-            if (player instanceof ServerPlayer self) {
-                targets.add(self);
-            }
-            for (ServerPlayer target : targets) {
-                ServerPlayNetworking.send(target, msg);
-            }
-        }
-    }
-
-    private CompoundTag save() {
+    public CompoundTag save() {
         CompoundTag tag = new CompoundTag();
         ListTag listTag = new ListTag();
         for (Map.Entry<String, Subcategory> entry : unlockedPages.entrySet()) {
@@ -77,12 +63,13 @@ public class CaveBookProgress {
         return tag;
     }
 
+
     public boolean unlockNextFor(String biomeCategory) {
         int prev = unlockedPages.getOrDefault(biomeCategory, Subcategory.EMPTY).ordinal();
         if (prev >= Subcategory.values().length - 1) {
             return false;
         } else {
-            if (Subcategory.canUnlockNext(biomeCategory, prev)) {
+            if(Subcategory.canUnlockNext(biomeCategory, prev)){
                 Subcategory unlocked = AlexsCaves.COMMON_CONFIG.onlyOneResearchNeeded ? Subcategory.getLastUnlockableFor(biomeCategory) : Subcategory.getByOrdinal(prev + 1);
                 unlockedPages.put(biomeCategory, unlocked);
                 return true;
@@ -96,9 +83,11 @@ public class CaveBookProgress {
         return subcategory.ordinal() <= prev;
     }
 
+
     public Subcategory getLastUnlockedCategory(String biomeCategory) {
         return unlockedPages.getOrDefault(biomeCategory, Subcategory.EMPTY);
     }
+
 
     public boolean isUnlockedFor(String key) {
         Subcategory subcategory = getSubcategoryFromPage(key);
@@ -133,7 +122,6 @@ public class CaveBookProgress {
 
         private final ResourceKey<Biome>[] limitedTo;
 
-        @SafeVarargs
         Subcategory(ResourceKey<Biome>... limitedTo) {
             this.limitedTo = limitedTo;
         }
@@ -142,16 +130,16 @@ public class CaveBookProgress {
             return Subcategory.values()[Mth.clamp(subCategory, 0, Subcategory.values().length - 1)];
         }
 
-        public static boolean canUnlockNext(String category, int currentLevel) {
+        public static boolean canUnlockNext(String category, int currentLevel){
             Subcategory next = getByOrdinal(currentLevel + 1);
             return next.limitedTo.length == 0 || Arrays.stream(next.limitedTo).anyMatch(biomeResourceKey -> biomeResourceKey.location().toString().equals(category));
         }
 
-        public static Subcategory getLastUnlockableFor(String category) {
+        public static Subcategory getLastUnlockableFor(String category){
             Subcategory subcategory = SECRETS;
-            if (subcategory.limitedTo.length > 0 && Arrays.stream(subcategory.limitedTo).anyMatch(biomeResourceKey -> biomeResourceKey.location().toString().equals(category))) {
+            if(subcategory.limitedTo.length > 0 && Arrays.stream(subcategory.limitedTo).anyMatch(biomeResourceKey -> biomeResourceKey.location().toString().equals(category))){
                 return subcategory;
-            } else {
+            }else{
                 return getByOrdinal(subcategory.ordinal() - 1);
             }
         }

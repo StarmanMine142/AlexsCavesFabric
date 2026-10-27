@@ -1,7 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.message;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
 import com.github.alexmodguy.alexscaves.server.misc.ACSoundRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.IrradiatedEffect;

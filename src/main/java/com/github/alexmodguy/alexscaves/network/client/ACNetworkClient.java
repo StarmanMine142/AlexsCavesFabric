@@ -1,21 +1,20 @@
-package com.github.alexmodguy.alexscaves.client;
+package com.github.alexmodguy.alexscaves.network.client;
 
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.citadel.server.entity.CitadelEntityData;
 import com.github.alexmodguy.alexscaves.citadel.server.message.AnimationMessage;
 import com.github.alexmodguy.alexscaves.citadel.server.message.PropertiesMessage;
+import com.github.alexmodguy.alexscaves.network.server.ACNetworkServer;
 import com.github.alexmodguy.alexscaves.server.message.*;
-import com.github.alexmodguy.alexscaves.server.network.ACNetworkingFabric;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-
-public final class ACNetworkingFabricClient {
+public final class ACNetworkClient {
     private static boolean initialized;
 
-    private ACNetworkingFabricClient() {
+    private ACNetworkClient() {
     }
 
     public static void registerClient() {
@@ -23,6 +22,17 @@ public final class ACNetworkingFabricClient {
             return;
         }
         initialized = true;
+
+        PayloadTypeRegistry.playS2C().register(CaveBookProgressSyncMessage.TYPE, CaveBookProgressSyncMessage.CODEC);
+        ClientPlayNetworking.registerGlobalReceiver(CaveBookProgressSyncMessage.TYPE, (msg, ctx) -> {
+            ctx.client().execute(() -> {
+                Player player = Minecraft.getInstance().player;
+                if (player != null) {
+                    CitadelEntityData.setCitadelTag(player, msg.tag());
+                            CitadelEntityData.getOrCreateCitadelTag(player);
+                }
+            });
+        });
 
         registerReceiver(BeholderSyncMessage.TYPE, BeholderSyncMessage::handle);
         registerReceiver(SpelunkeryTableCompleteTutorialMessage.TYPE, SpelunkeryTableCompleteTutorialMessage::handle);
@@ -40,52 +50,9 @@ public final class ACNetworkingFabricClient {
 
     private static <T extends CustomPacketPayload> void registerReceiver(
             CustomPacketPayload.Type<T> type,
-            ACNetworkingFabric.PayloadHandler<T> handler) {
+            ACNetworkServer.PayloadHandler<T> handler) {
         ClientPlayNetworking.registerGlobalReceiver(type,
                 (payload, context) -> handler.handle(payload, new ClientPayloadContext(context))
         );
-    }
-
-    private record ClientPayloadContext(ClientPlayNetworking.Context context) implements ACPayloadContext {
-
-        @Override
-        public Player player() {
-            return context.player();
-        }
-
-        @Override
-        public <T> CompletableFuture<T> enqueueWork(Callable<T> task) {
-            CompletableFuture<T> future = new CompletableFuture<>();
-            context.client().execute(() -> {
-                try {
-                    future.complete(task.call());
-                } catch (Throwable t) {
-                    future.completeExceptionally(t);
-                }
-            });
-            return future;
-        }
-
-        @Override
-        public void enqueueWork(Runnable task) {
-            context.client().execute(task);
-        }
-
-        @Override
-        public Flow flow() {
-            return CLIENTBOUND_FLOW;
-        }
-
-        private static final Flow CLIENTBOUND_FLOW = new Flow() {
-            @Override
-            public boolean isClientbound() {
-                return true;
-            }
-
-            @Override
-            public boolean isServerbound() {
-                return false;
-            }
-        };
     }
 }

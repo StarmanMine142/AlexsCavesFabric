@@ -1,6 +1,7 @@
 package com.github.alexmodguy.alexscaves.server.event;
 
 import com.github.alexmodguy.alexscaves.AlexsCaves;
+import com.github.alexmodguy.alexscaves.citadel.server.entity.CitadelEntityData;
 import com.github.alexmodguy.alexscaves.citadel.server.tick.ServerTickRateTracker;
 import com.github.alexmodguy.alexscaves.mixin.ChunkGeneratorAccessor;
 import com.github.alexmodguy.alexscaves.server.block.ACBlockRegistry;
@@ -18,10 +19,10 @@ import com.github.alexmodguy.alexscaves.server.item.ExtinctionSpearItem;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRarity;
 import com.github.alexmodguy.alexscaves.server.level.biome.ACBiomeRegistry;
 import com.github.alexmodguy.alexscaves.server.level.biome.BiomeSourceAccessor;
+import com.github.alexmodguy.alexscaves.server.message.CaveBookProgressSyncMessage;
 import com.github.alexmodguy.alexscaves.server.misc.ACFluidHelper;
 import com.github.alexmodguy.alexscaves.server.misc.ACSoundRegistry;
 import com.github.alexmodguy.alexscaves.server.misc.ACTagRegistry;
-import com.github.alexmodguy.alexscaves.server.misc.CaveBookProgress;
 import com.github.alexmodguy.alexscaves.server.potion.ACEffectRegistry;
 import com.github.alexmodguy.alexscaves.server.potion.DarknessIncarnateEffect;
 import com.github.alexmodguy.alexscaves.server.potion.SugarRushEffect;
@@ -51,6 +52,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -485,16 +487,21 @@ public class CommonEvents {
         });
 
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            Player player = handler.getPlayer();
-            if (AlexsCaves.COMMON_CONFIG.warnGenerationIncompatibility && !AlexsCaves.MOD_GENERATION_CONFLICTS.isEmpty() && !player.level().isClientSide) {
+            ServerPlayer player = handler.getPlayer();
+            server.execute(() -> {
+                CompoundTag caveBookTag = CitadelEntityData.getOrCreateCitadelTag(player);
+                AlexsCaves.sendNonLocal(new CaveBookProgressSyncMessage(caveBookTag.copy()), player);
+            });
+
+            if (AlexsCaves.COMMON_CONFIG.warnGenerationIncompatibility
+                    && !AlexsCaves.MOD_GENERATION_CONFLICTS.isEmpty()) {
                 for (String modid : AlexsCaves.MOD_GENERATION_CONFLICTS) {
                     if (FabricLoader.getInstance().isModLoaded(modid)) {
-                        player.sendSystemMessage(Component.translatable("alexscaves.startup_warning.generation_incompatible", modid).withStyle(ChatFormatting.RED));
+                        player.sendSystemMessage(Component.translatable(
+                                "alexscaves.startup_warning.generation_incompatible", modid
+                        ).withStyle(ChatFormatting.RED));
                     }
                 }
-            }
-            if (!player.level().isClientSide) {
-                CaveBookProgress.syncCaveBookProgress(player);
             }
         });
     }

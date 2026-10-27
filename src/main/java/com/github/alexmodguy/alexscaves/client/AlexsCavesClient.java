@@ -20,7 +20,8 @@ import com.github.alexmodguy.alexscaves.client.render.item.ACItemstackRenderer;
 import com.github.alexmodguy.alexscaves.client.render.item.RaygunRenderHelper;
 import com.github.alexmodguy.alexscaves.client.render.item.tooltip.ClientSackOfSatingTooltip;
 import com.github.alexmodguy.alexscaves.client.sound.*;
-import com.github.alexmodguy.alexscaves.fabric.ACMultipartFabricClient;
+import com.github.alexmodguy.alexscaves.multipart.ACMultipartClient;
+import com.github.alexmodguy.alexscaves.network.client.ACNetworkClient;
 import com.github.alexmodguy.alexscaves.server.block.ACBlockRegistry;
 import com.github.alexmodguy.alexscaves.server.block.AcidBlock;
 import com.github.alexmodguy.alexscaves.server.block.ActivatedByAltar;
@@ -123,7 +124,6 @@ public class AlexsCavesClient implements ClientModInitializer {
     public static boolean primordialBossActive = false;
     public static float prevPrimordialBossActiveAmount = 0;
     public static float primordialBossActiveAmount = 0;
-    public static ClientLevel lastBossLevel;
     public static float prevNukeFlashAmount = 0;
     public static float nukeFlashAmount = 0;
     public static float prevPossessionStrengthAmount = 0;
@@ -161,8 +161,8 @@ public class AlexsCavesClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ACNetworkingFabricClient.registerClient();
-        ACMultipartFabricClient.registerClient();
+        ACNetworkClient.registerClient();
+        ACMultipartClient.registerClient();
 
         ACModelLayers.registerFabric();
         ClientLayerRegistry.register();

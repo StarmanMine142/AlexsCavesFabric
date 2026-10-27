@@ -39,7 +39,7 @@ public class CaveBookScreen extends Screen {
     public static final int TEXT_LINK_COLOR = 0X111111;
     public static final int TEXT_LINK_HOVER_COLOR = 0X0094FF;
     public static final int TEXT_LINK_LOCKED_COLOR = 0XD3C9AB;
-    private final CaveBookProgress caveBookProgress;
+    private CaveBookProgress caveBookProgress;
     public boolean unlockTooltip;
     private boolean incrementingPage;
     private boolean decrementingPage;
@@ -89,7 +89,10 @@ public class CaveBookScreen extends Screen {
         return minecraft;
     }
 
+    @Override
     public void init() {
+        super.init();
+        this.caveBookProgress = CaveBookProgress.getCaveBookProgress(Minecraft.getInstance().player);
     }
 
     @Override

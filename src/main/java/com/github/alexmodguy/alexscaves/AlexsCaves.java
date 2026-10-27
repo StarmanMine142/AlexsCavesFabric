@@ -3,9 +3,9 @@ package com.github.alexmodguy.alexscaves;
 import com.github.alexmodguy.alexscaves.client.AlexsCavesClient;
 import com.github.alexmodguy.alexscaves.client.config.ACClientConfig;
 import com.github.alexmodguy.alexscaves.config.ACModConfigSpec;
-import com.github.alexmodguy.alexscaves.fabric.ACMultipartFabric;
+import com.github.alexmodguy.alexscaves.network.server.ACNetworkServer;
+import com.github.alexmodguy.alexscaves.multipart.ACMultipartServer;
 import com.github.alexmodguy.alexscaves.server.level.ACWorldWorkerManager;
-import com.github.alexmodguy.alexscaves.server.network.ACNetworkingFabric;
 import com.github.alexmodguy.alexscaves.server.block.fluid.ACFluidRegistry;
 import com.github.alexmodguy.alexscaves.server.block.poi.ACPOIRegistry;
 import com.github.alexmodguy.alexscaves.server.config.ACServerConfig;
@@ -83,9 +83,10 @@ public class AlexsCaves implements ModInitializer {
     @Override
     public void onInitialize() {
         ACWorldWorkerManager.registerCommon();
+        CommonEvents.register();
 
-        ACNetworkingFabric.registerCommon();
-        ACMultipartFabric.registerCommon();
+        ACNetworkServer.registerCommon();
+        ACMultipartServer.registerCommon();
 
         ACLootTableRegistry.registerLootTables();
         ACEntityDataRegistry.register();

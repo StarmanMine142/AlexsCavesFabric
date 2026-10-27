@@ -2,7 +2,7 @@ package com.github.alexmodguy.alexscaves.citadel.server.message;
 
 import com.github.alexmodguy.alexscaves.citadel.animation.Animation;
 import com.github.alexmodguy.alexscaves.citadel.animation.IAnimatedEntity;
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

@@ -1,13 +1,13 @@
-package com.github.alexmodguy.alexscaves.server.network;
+package com.github.alexmodguy.alexscaves.network.client;
 
-import com.github.alexmodguy.alexscaves.ACPayloadContext;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import com.github.alexmodguy.alexscaves.network.ACPayloadContext;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 
-record ServerPayloadContext(ServerPlayNetworking.Context context) implements ACPayloadContext {
+record ClientPayloadContext(ClientPlayNetworking.Context context) implements ACPayloadContext {
 
     @Override
     public Player player() {
@@ -17,7 +17,7 @@ record ServerPayloadContext(ServerPlayNetworking.Context context) implements ACP
     @Override
     public <T> CompletableFuture<T> enqueueWork(Callable<T> task) {
         CompletableFuture<T> future = new CompletableFuture<>();
-        context.server().execute(() -> {
+        context.client().execute(() -> {
             try {
                 future.complete(task.call());
             } catch (Throwable t) {
@@ -29,16 +29,23 @@ record ServerPayloadContext(ServerPlayNetworking.Context context) implements ACP
 
     @Override
     public void enqueueWork(Runnable task) {
-        context.server().execute(task);
+        context.client().execute(task);
     }
 
     @Override
     public Flow flow() {
-        return SERVERBOUND;
+        return CLIENTBOUND_FLOW;
     }
 
-    private static final Flow SERVERBOUND = new Flow() {
-        @Override public boolean isClientbound() { return false; }
-        @Override public boolean isServerbound() { return true; }
+    private static final Flow CLIENTBOUND_FLOW = new Flow() {
+        @Override
+        public boolean isClientbound() {
+            return true;
+        }
+
+        @Override
+        public boolean isServerbound() {
+            return false;
+        }
     };
 }
