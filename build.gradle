@@ -85,6 +85,10 @@ dependencies {
     modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 
+    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}"
+
+    modImplementation "maven.modrinth:modmenu:11.0.5"
+
     // Citadel remains vendored in-tree on this branch.
     // Add an external dependency only once the port fully switches over.
     // compileOnly "group:artifact:${citadel_version}"

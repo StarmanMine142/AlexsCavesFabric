@@ -71,11 +71,11 @@ public class AlexsCaves implements ModInitializer {
     private static MinecraftServer currentServer;
 
     static {
-        final Pair<ACServerConfig, ACModConfigSpec> serverPair = new ACModConfigSpec.Builder()
+        final Pair<ACServerConfig, ACModConfigSpec> serverPair = new ACModConfigSpec.Builder("alexscaves-server")
                 .configure(ACServerConfig::new);
         COMMON_CONFIG = serverPair.getLeft();
 
-        final Pair<ACClientConfig, ACModConfigSpec> clientPair = new ACModConfigSpec.Builder()
+        final Pair<ACClientConfig, ACModConfigSpec> clientPair = new ACModConfigSpec.Builder("alexscaves-client")
                 .configure(ACClientConfig::new);
         CLIENT_CONFIG = clientPair.getLeft();
     }

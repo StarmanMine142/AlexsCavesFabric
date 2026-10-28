@@ -22,6 +22,9 @@
     ],
     "rei_client": [
       "com.github.alexmodguy.alexscaves.compat.rei.AlexsCavesReiPlugin"
+    ],
+    "modmenu": [
+      "com.github.alexmodguy.alexscaves.client.gui.config.ACModMenuIntegration"
     ]
   },
   "mixins": [
